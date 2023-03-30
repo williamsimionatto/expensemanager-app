@@ -1,4 +1,5 @@
 import 'package:expensemanagerapp/data/http/http.dart';
+import 'package:expensemanagerapp/data/model/remote_expense_model.dart';
 import 'package:expensemanagerapp/domain/entities/entities.dart';
 import 'package:expensemanagerapp/domain/usecases/usecase.dart';
 
@@ -10,8 +11,11 @@ class RemoteLoadExpenses implements LoadExpenses {
 
   @override
   Future<List<ExpenseEntity>> load() async {
-    await httpClient.request(url: url, method: 'get');
+    final httpResponse = await httpClient.request(url: url, method: 'get');
 
-    return [];
+    return httpResponse
+        .map<ExpenseEntity>(
+            (json) => RemoteExpenseModel.fromJson(json).toEntity())
+        .toList();
   }
 }

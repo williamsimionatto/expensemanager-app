@@ -21,6 +21,14 @@ void main() {
     registerFallbackValue(Uri.parse(url));
   });
 
+  group('shared', () {
+    test('Should throw ServerError if invalid http method is provided',
+        () async {
+      final future = sut.request(url: url, method: 'invalid_method');
+      expect(future, throwsA(HttpError.serverError));
+    });
+  });
+
   group('GET', () {
     test('Should call get with correct values', () async {
       await sut.request(url: url, method: 'get');

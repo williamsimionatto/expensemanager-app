@@ -43,5 +43,12 @@ void main() {
       final response = await sut.request(url: url, method: 'get');
       expect(response, null);
     });
+
+    test('Should return null if get returns 204', () async {
+      client.mockGet(204, body: '');
+
+      final response = await sut.request(url: url, method: 'get');
+      expect(response, null);
+    });
   });
 }

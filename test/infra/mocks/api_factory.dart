@@ -1,6 +1,8 @@
 import 'package:faker/faker.dart';
 
 class ApiFactory {
+  static Map makeInvalidList() => {'invalid_key': 'invalid_value'};
+
   static Map makeExpense() => {
         'id': faker.randomGenerator.integer(10, min: 1),
         'description': faker.lorem.sentence(),

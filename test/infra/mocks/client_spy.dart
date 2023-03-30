@@ -10,4 +10,5 @@ class ClientSpy extends Mock implements Client {
       when(() => this.get(any(), headers: any(named: 'headers')));
   void mockGet(int statusCode, {String body = '{"any_key":"any_value"}'}) =>
       mockGetCall().thenAnswer((_) async => Response(body, statusCode));
+  void mockGetError() => mockGetCall().thenThrow(Exception());
 }

@@ -80,5 +80,12 @@ void main() {
       final future = sut.request(url: url, method: 'get');
       expect(future, throwsA(HttpError.serverError));
     });
+
+    test('Should return ServerError if get throws', () async {
+      client.mockGetError();
+
+      final future = sut.request(url: url, method: 'get');
+      expect(future, throwsA(HttpError.serverError));
+    });
   });
 }

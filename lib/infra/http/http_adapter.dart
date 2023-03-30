@@ -22,6 +22,7 @@ class HttpAdapter implements HttpClient {
         'accept': 'application/json',
       });
 
+    final jsonBody = body != null ? jsonEncode(body) : null;
     var response = Response('', 500);
     Future<Response>? futureResponse;
 
@@ -29,6 +30,12 @@ class HttpAdapter implements HttpClient {
       final uri = Uri.parse(url);
       if (method == 'get') {
         futureResponse = client.get(uri, headers: defaultHeaders);
+      } else if (method == 'post') {
+        futureResponse = client.post(
+          uri,
+          headers: defaultHeaders,
+          body: jsonBody,
+        );
       }
 
       if (futureResponse != null) {

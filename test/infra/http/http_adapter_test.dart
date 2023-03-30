@@ -58,5 +58,13 @@ void main() {
       final future = sut.request(url: url, method: 'get');
       expect(future, throwsA(HttpError.badRequest));
     });
+
+    test('Should return BadRequestError if get returns 400 with body',
+        () async {
+      client.mockGet(400, body: '');
+
+      final future = sut.request(url: url, method: 'get');
+      expect(future, throwsA(HttpError.badRequest));
+    });
   });
 }

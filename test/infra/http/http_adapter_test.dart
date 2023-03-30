@@ -150,5 +150,12 @@ void main() {
       final response = await sut.request(url: url, method: 'post');
       expect(response, null);
     });
+
+    test('Should return null if post returns 204', () async {
+      client.mockPost(204, body: '');
+
+      final response = await sut.request(url: url, method: 'post');
+      expect(response, null);
+    });
   });
 }

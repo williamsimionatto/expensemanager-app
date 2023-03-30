@@ -1,9 +1,10 @@
-import 'package:expensemanagerapp/domain/entities/expense_entity.dart';
-import 'package:expensemanagerapp/domain/helpers/helpers.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
+import 'package:expensemanagerapp/domain/entities/entities.dart';
+import 'package:expensemanagerapp/domain/helpers/helpers.dart';
+import 'package:expensemanagerapp/data/http/http.dart';
 import 'package:expensemanagerapp/data/usecases/usecases.dart';
 
 import '../../../infra/mocks/mocks.dart';
@@ -52,6 +53,18 @@ void main() {
       'Should return UnexpectError if HttpClient returns 200 with invalid data',
       () async {
     httpClient.mockRequest(ApiFactory.makeInvalidList());
+    final future = sut.load();
+    expect(future, throwsA(DomainError.unexpected));
+  });
+
+  test('Should throw UnexpectedError if HttpClient returns 404', () async {
+    httpClient.mockRequestError(HttpError.notFound);
+    final future = sut.load();
+    expect(future, throwsA(DomainError.unexpected));
+  });
+
+  test('Should throw UnexpectedError if HttpClient returns 500', () async {
+    httpClient.mockRequestError(HttpError.serverError);
     final future = sut.load();
     expect(future, throwsA(DomainError.unexpected));
   });

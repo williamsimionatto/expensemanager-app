@@ -17,7 +17,7 @@ class RemoteExpenseModel {
   factory RemoteExpenseModel.fromJson(Map json) {
     if (!json.keys
         .toSet()
-        .containsAll(['id', 'name', 'email', 'active', 'cpf'])) {
+        .containsAll(['id', 'description', 'amount', 'date'])) {
       throw HttpError.invalidData;
     }
 

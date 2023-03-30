@@ -1,3 +1,4 @@
+import 'package:expensemanagerapp/data/http/http.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -49,6 +50,13 @@ void main() {
 
       final response = await sut.request(url: url, method: 'get');
       expect(response, null);
+    });
+
+    test('Should return BadRequestError if get returns 400', () async {
+      client.mockGet(400);
+
+      final future = sut.request(url: url, method: 'get');
+      expect(future, throwsA(HttpError.badRequest));
     });
   });
 }

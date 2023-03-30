@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:http/http.dart';
 
 import 'package:expensemanagerapp/data/http/http.dart';
@@ -20,15 +22,44 @@ class HttpAdapter implements HttpClient {
         'accept': 'application/json',
       });
 
+    final jsonBody = body != null ? jsonEncode(body) : null;
+    var response = Response('', 500);
+    Future<Response>? futureResponse;
+
     try {
       final uri = Uri.parse(url);
       if (method == 'get') {
-        await client.get(uri, headers: defaultHeaders);
+        futureResponse = client.get(uri, headers: defaultHeaders);
+      } else if (method == 'post') {
+        futureResponse = client.post(
+          uri,
+          headers: defaultHeaders,
+          body: jsonBody,
+        );
+      }
+
+      if (futureResponse != null) {
+        response = await futureResponse;
       }
     } catch (error) {
       throw HttpError.serverError;
     }
 
-    return null;
+    return _handleResponse(response);
+  }
+
+  dynamic _handleResponse(Response response) {
+    switch (response.statusCode) {
+      case 200:
+        return response.body.isEmpty ? null : jsonDecode(response.body);
+      case 204:
+        return null;
+      case 400:
+        throw HttpError.badRequest;
+      case 404:
+        throw HttpError.notFound;
+      default:
+        throw HttpError.serverError;
+    }
   }
 }

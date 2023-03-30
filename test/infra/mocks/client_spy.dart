@@ -17,4 +17,5 @@ class ClientSpy extends Mock implements Client {
       .post(any(), body: any(named: 'body'), headers: any(named: 'headers')));
   void mockPost(int statusCode, {String body = '{"any_key":"any_value"}'}) =>
       mockPostCall().thenAnswer((_) async => Response(body, statusCode));
+  void mockPostError() => mockPostCall().thenThrow(Exception());
 }

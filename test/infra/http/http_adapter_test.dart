@@ -1,9 +1,10 @@
-import 'package:expensemanagerapp/data/http/http.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
+import 'package:expensemanagerapp/data/http/http.dart';
 import 'package:expensemanagerapp/infra/http/http.dart';
+
 import '../mocks/mocks.dart';
 
 void main() {

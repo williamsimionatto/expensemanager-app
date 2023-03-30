@@ -129,5 +129,14 @@ void main() {
             body: '{"any_key":"any_value"}'),
       );
     });
+
+    test('Should call post without body', () async {
+      await sut.request(url: url, method: 'post');
+
+      verify(() => client.post(Uri.parse(url), headers: {
+            'content-type': 'application/json',
+            'accept': 'application/json'
+          }));
+    });
   });
 }

@@ -66,5 +66,12 @@ void main() {
       final future = sut.request(url: url, method: 'get');
       expect(future, throwsA(HttpError.badRequest));
     });
+
+    test('Should return NotFoundError if get returns 404', () async {
+      client.mockGet(404);
+
+      final future = sut.request(url: url, method: 'get');
+      expect(future, throwsA(HttpError.notFound));
+    });
   });
 }

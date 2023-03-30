@@ -1,3 +1,4 @@
+import 'package:expensemanagerapp/data/http/http.dart';
 import 'package:expensemanagerapp/domain/entities/entities.dart';
 
 class RemoteExpenseModel {
@@ -14,6 +15,12 @@ class RemoteExpenseModel {
   });
 
   factory RemoteExpenseModel.fromJson(Map json) {
+    if (!json.keys
+        .toSet()
+        .containsAll(['id', 'name', 'email', 'active', 'cpf'])) {
+      throw HttpError.invalidData;
+    }
+
     return RemoteExpenseModel(
       id: json['id'],
       description: json['description'],

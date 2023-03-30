@@ -1,4 +1,5 @@
 import 'package:expensemanagerapp/domain/entities/expense_entity.dart';
+import 'package:expensemanagerapp/domain/helpers/helpers.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -45,5 +46,13 @@ void main() {
         date: list[1]['date'],
       ),
     ]);
+  });
+
+  test(
+      'Should return UnexpectError if HttpClient returns 200 with invalid data',
+      () async {
+    httpClient.mockRequest(ApiFactory.makeInvalidList());
+    final future = sut.load();
+    expect(future, throwsA(DomainError.unexpected));
   });
 }

@@ -1,5 +1,8 @@
-import 'package:expensemanagerapp/ui/pages/pages.dart';
 import 'package:flutter/material.dart';
+
+import 'package:expensemanagerapp/ui/pages/pages.dart';
+
+import '../../components/components.dart';
 
 class ExpensesPage extends StatefulWidget {
   final ExpensesPresenter presenter;
@@ -20,8 +23,21 @@ class _ExpensesPage extends State<ExpensesPage> {
       body: Builder(
         builder: (context) {
           widget.presenter.loadData();
-          return const Center(
-            child: Text('Expenses'),
+
+          return StreamBuilder<List<ExpenseViewModel>?>(
+            stream: widget.presenter.expensesStream,
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return ReloadScreen(
+                  error: '${snapshot.error}',
+                  reload: widget.presenter.loadData,
+                );
+              }
+
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            },
           );
         },
       ),

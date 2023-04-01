@@ -1,3 +1,4 @@
+import 'package:expensemanagerapp/domain/helpers/domain_error.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:expensemanagerapp/ui/pages/pages.dart';
@@ -26,5 +27,20 @@ void main() {
     await loadPage(tester);
 
     verify(() => presenter.loadData()).called(1);
+  });
+
+  testWidgets('Should presenter error if loadExpensesStream fails',
+      (WidgetTester tester) async {
+    await loadPage(tester);
+
+    presenter.emitExpensesError(DomainError.unexpected.description);
+    await tester.pump();
+
+    expect(
+      find.text('Algo errado aconteceu. Tente novamente em breve.'),
+      findsOneWidget,
+    );
+    expect(find.text('Recarregar'), findsOneWidget);
+    expect(find.text('Expense 1'), findsNothing);
   });
 }

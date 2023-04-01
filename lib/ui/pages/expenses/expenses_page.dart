@@ -18,13 +18,16 @@ class ExpensesPage extends StatefulWidget {
 class _ExpensesPage extends State<ExpensesPage> with LoadingManager {
   @override
   Widget build(BuildContext context) {
+    Future.delayed(Duration.zero, () {
+      handleLoading(context, widget.presenter.isLoadingStream);
+    });
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Expenses'),
       ),
       body: Builder(
         builder: (context) {
-          handleLoading(context, widget.presenter.isLoadingStream);
           widget.presenter.loadData();
 
           return StreamBuilder<List<ExpenseViewModel>?>(

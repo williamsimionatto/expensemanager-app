@@ -8,7 +8,7 @@ import 'package:expensemanagerapp/presentation/mixins/mixins.dart';
 import 'package:expensemanagerapp/ui/pages/pages.dart';
 
 class GetxExpensesPresenter extends GetxController
-    with LoadingManager
+    with LoadingManager, NavigationManager
     implements ExpensesPresenter {
   final LoadExpenses loadExpenses;
 

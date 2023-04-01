@@ -24,7 +24,7 @@ class _ExpensesPage extends State<ExpensesPage> with LoadingManager {
       ),
       body: Builder(
         builder: (context) {
-          handleLoading(context, widget.presenter.isLoadingStream);
+          // handleLoading(context, widget.presenter.isLoadingStream);
           widget.presenter.loadData();
 
           return StreamBuilder<List<ExpenseViewModel>?>(

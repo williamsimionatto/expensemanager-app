@@ -1,26 +1,25 @@
 {
-  "configurations": [
-      {
-          "name": "Flutter",
-          "type": "dart",
-          "request": "launch",
-          "program": "lib/main/main.dart"
-      },
-      {
-          "name": "Flutter: Run all Tests",
-          "type": "dart",
-          "request": "launch",
-          "program": "./test/"
-      },
-      {
-          "name": "Flutter: Run all Tests with Covarege",
-          "type": "dart",
-          "request": "launch",
-          "program": "./test/",
-          "args": [
-              "--coverage",
-          ],
-      },
-  ]
+    "configurations": [
+        {
+            "name": "Flutter",
+            "type": "dart",
+            "request": "launch",
+            "program": "lib/main/main.dart"
+        },
+        {
+            "name": "Flutter: Run all Tests",
+            "type": "dart",
+            "request": "launch",
+            "program": "./test/"
+        },
+        {
+            "name": "Flutter: Run all Tests with Covarege",
+            "type": "dart",
+            "request": "launch",
+            "program": "./test/",
+            "args": [
+                "--coverage",
+            ],
+        },
+    ]
 }
-

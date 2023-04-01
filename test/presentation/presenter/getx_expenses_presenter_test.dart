@@ -1,3 +1,4 @@
+import 'package:expensemanagerapp/domain/helpers/helpers.dart';
 import 'package:expensemanagerapp/ui/pages/pages.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -48,6 +49,20 @@ void main() {
         ),
       ),
     );
+    await sut.loadData();
+  });
+
+  test('Should emit correct events on failure', () async {
+    loadExpenses.mockLoadError(DomainError.unexpected);
+
+    expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+    sut.expensesStream.listen(
+      null,
+      onError: expectAsync1(
+        (error) => expect(error, DomainError.unexpected.description),
+      ),
+    );
+
     await sut.loadData();
   });
 }

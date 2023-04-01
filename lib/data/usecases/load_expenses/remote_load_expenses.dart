@@ -2,7 +2,7 @@ import 'package:expensemanagerapp/data/http/http.dart';
 import 'package:expensemanagerapp/data/model/remote_expense_model.dart';
 import 'package:expensemanagerapp/domain/entities/entities.dart';
 import 'package:expensemanagerapp/domain/helpers/domain_error.dart';
-import 'package:expensemanagerapp/domain/usecases/usecase.dart';
+import 'package:expensemanagerapp/domain/usecases/usecases.dart';
 
 class RemoteLoadExpenses implements LoadExpenses {
   final String url;

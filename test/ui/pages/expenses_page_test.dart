@@ -1,4 +1,5 @@
 import 'package:expensemanagerapp/domain/helpers/domain_error.dart';
+import 'package:expensemanagerapp/ui/mocks/viewmodel_factory.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:expensemanagerapp/ui/pages/pages.dart';
@@ -42,5 +43,21 @@ void main() {
     );
     expect(find.text('Recarregar'), findsOneWidget);
     expect(find.text('Expense 1'), findsNothing);
+  });
+
+  testWidgets('Should presenter list if loadExpensesStream succeeds',
+      (WidgetTester tester) async {
+    await loadPage(tester);
+    presenter.emitUsers(ViewModelFactory.makeExpenseList());
+    await tester.pump();
+
+    expect(
+      find.text('Algo errado aconteceu. Tente novamente em breve.'),
+      findsNothing,
+    );
+    expect(find.text('Recarregar'), findsNothing);
+
+    expect(find.text('Expense 1'), findsOneWidget);
+    expect(find.text('Expense 2'), findsOneWidget);
   });
 }

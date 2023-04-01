@@ -12,6 +12,9 @@ class ExpensesPresenterSpy extends Mock implements ExpensesPresenter {
     when(() => expensesStream).thenAnswer((_) => loadExpensesController.stream);
   }
 
+  void emitUsers(List<ExpenseViewModel> data) =>
+      loadExpensesController.add(data);
+
   void emitExpensesError(String error) =>
       loadExpensesController.addError(error);
 

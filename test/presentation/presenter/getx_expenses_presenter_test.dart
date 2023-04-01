@@ -1,3 +1,4 @@
+import 'package:expensemanagerapp/ui/pages/pages.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -22,5 +23,31 @@ void main() {
   test('Shoudl call LoadExpenses on loadData', () async {
     await sut.loadData();
     verify(() => loadExpenses.load()).called(1);
+  });
+
+  test('Should emit correct events on success', () async {
+    expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+    sut.expensesStream.listen(
+      expectAsync1(
+        (expensesData) => expect(
+          expensesData,
+          [
+            ExpenseViewModel(
+              id: expenses[0].id,
+              description: expenses[0].description,
+              amount: expenses[0].amount,
+              date: expenses[0].date,
+            ),
+            ExpenseViewModel(
+              id: expenses[1].id,
+              description: expenses[1].description,
+              amount: expenses[1].amount,
+              date: expenses[1].date,
+            ),
+          ],
+        ),
+      ),
+    );
+    await sut.loadData();
   });
 }

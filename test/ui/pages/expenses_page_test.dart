@@ -48,7 +48,7 @@ void main() {
   testWidgets('Should presenter list if loadExpensesStream succeeds',
       (WidgetTester tester) async {
     await loadPage(tester);
-    presenter.emitUsers(ViewModelFactory.makeExpenseList());
+    presenter.emitExpenses(ViewModelFactory.makeExpenseList());
     await tester.pump();
 
     expect(
@@ -59,5 +59,17 @@ void main() {
 
     expect(find.text('Expense 1'), findsOneWidget);
     expect(find.text('Expense 2'), findsOneWidget);
+  });
+
+  testWidgets('Should call LoadExpenses on reload button click',
+      (WidgetTester tester) async {
+    await loadPage(tester);
+
+    presenter.emitExpensesError(DomainError.unexpected.description);
+    await tester.pump();
+
+    await tester.tap(find.text('Recarregar'));
+
+    verify(() => presenter.loadData()).called(2);
   });
 }

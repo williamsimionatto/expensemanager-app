@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'package:expensemanagerapp/ui/pages/pages.dart';
 
+import '../../mixins/mixins.dart';
 import '../../components/components.dart';
 
 class ExpensesPage extends StatefulWidget {
@@ -14,7 +15,7 @@ class ExpensesPage extends StatefulWidget {
   State<ExpensesPage> createState() => _ExpensesPage();
 }
 
-class _ExpensesPage extends State<ExpensesPage> {
+class _ExpensesPage extends State<ExpensesPage> with LoadingManager {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,6 +24,7 @@ class _ExpensesPage extends State<ExpensesPage> {
       ),
       body: Builder(
         builder: (context) {
+          handleLoading(context, widget.presenter.isLoadingStream);
           widget.presenter.loadData();
 
           return StreamBuilder<List<ExpenseViewModel>?>(

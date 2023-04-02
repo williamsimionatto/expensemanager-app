@@ -1,5 +1,6 @@
 import 'package:expensemanagerapp/data/http/http.dart';
 import 'package:expensemanagerapp/data/model/model.dart';
+import 'package:expensemanagerapp/domain/helpers/helpers.dart';
 import 'package:expensemanagerapp/domain/usecases/usecases.dart';
 
 class RemoteAddExpense {
@@ -9,11 +10,15 @@ class RemoteAddExpense {
   RemoteAddExpense({required this.url, required this.httpClient});
 
   Future<void> add(AddExpenseParams params) async {
-    final body = RemoteAddExpenseModel.fromDomain(params).toJson();
-    await httpClient.request(
-      url: url,
-      method: 'post',
-      body: body,
-    );
+    try {
+      final body = RemoteAddExpenseModel.fromDomain(params).toJson();
+      await httpClient.request(
+        url: url,
+        method: 'post',
+        body: body,
+      );
+    } catch (error) {
+      throw DomainError.unexpected;
+    }
   }
 }

@@ -1,3 +1,5 @@
+import 'package:expensemanagerapp/data/http/http.dart';
+import 'package:expensemanagerapp/domain/helpers/helpers.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -36,5 +38,11 @@ void main() {
         'period_id': params.periodId,
       }),
     );
+  });
+
+  test('Should throw UnexpectedError if HttpClient returns 400', () async {
+    httpClient.mockRequestError(HttpError.badRequest);
+    final future = sut.add(params);
+    expect(future, throwsA(DomainError.unexpected));
   });
 }

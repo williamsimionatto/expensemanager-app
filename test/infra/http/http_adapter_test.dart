@@ -196,14 +196,6 @@ void main() {
       expect(future, throwsA(HttpError.unprocessableEntity));
     });
 
-    test('Should return UnprocessableEntityError if post returns 422 with body',
-        () async {
-      client.mockPost(422);
-
-      final response = await sut.request(url: url, method: 'post');
-      expect(response, {'any_key': 'any_value'});
-    });
-
     test('Should return ServerError if post returns 500', () async {
       client.mockPost(500);
 

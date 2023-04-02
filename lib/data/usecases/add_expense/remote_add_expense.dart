@@ -21,8 +21,10 @@ class RemoteAddExpense implements AddExpense {
       );
 
       return RemoteExpenseModel.fromJson(httpResponse).toEntity();
-    } catch (error) {
-      throw DomainError.unexpected;
+    } on HttpError catch (error) {
+      throw error == HttpError.unprocessableEntity
+          ? DomainError.unprocessable
+          : DomainError.unexpected;
     }
   }
 }

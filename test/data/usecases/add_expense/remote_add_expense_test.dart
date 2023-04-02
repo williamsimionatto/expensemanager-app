@@ -59,6 +59,13 @@ void main() {
     expect(future, throwsA(DomainError.unexpected));
   });
 
+  test('Should return a UnprocessableEntityError if HttpClient returns 422',
+      () async {
+    httpClient.mockRequestError(HttpError.unprocessableEntity);
+    final future = sut.add(params);
+    expect(future, throwsA(DomainError.unprocessable));
+  });
+
   test(
       'Should throw UnexpectedError if HttpClient returns 200 with invalid data',
       () async {

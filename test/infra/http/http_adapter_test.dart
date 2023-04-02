@@ -172,7 +172,7 @@ void main() {
       expect(future, throwsA(HttpError.badRequest));
     });
 
-    test('Should return BadRequestError if post returns 400 with body',
+    test('Should return BadRequestError if post returns 400 without body',
         () async {
       client.mockPost(400, body: '');
 
@@ -185,6 +185,23 @@ void main() {
 
       final future = sut.request(url: url, method: 'post');
       expect(future, throwsA(HttpError.notFound));
+    });
+
+    test(
+        'Should return UnprocessableEntityError if post returns 422 without body',
+        () async {
+      client.mockPost(422, body: '');
+
+      final future = sut.request(url: url, method: 'post');
+      expect(future, throwsA(HttpError.unprocessableEntity));
+    });
+
+    test('Should return UnprocessableEntityError if post returns 422 with body',
+        () async {
+      client.mockPost(422);
+
+      final response = await sut.request(url: url, method: 'post');
+      expect(response, {'any_key': 'any_value'});
     });
 
     test('Should return ServerError if post returns 500', () async {

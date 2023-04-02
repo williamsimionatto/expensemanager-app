@@ -58,6 +58,12 @@ class HttpAdapter implements HttpClient {
         throw HttpError.badRequest;
       case 404:
         throw HttpError.notFound;
+      case 422:
+        if (response.body.isEmpty) {
+          throw HttpError.unprocessableEntity;
+        } else {
+          return jsonDecode(response.body);
+        }
       default:
         throw HttpError.serverError;
     }

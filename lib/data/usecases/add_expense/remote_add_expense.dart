@@ -14,13 +14,13 @@ class RemoteAddExpense implements AddExpense {
   Future<ExpenseEntity> add(AddExpenseParams params) async {
     try {
       final body = RemoteAddExpenseModel.fromDomain(params).toJson();
-      await httpClient.request(
+      final httpResponse = await httpClient.request(
         url: url,
         method: 'post',
         body: body,
       );
 
-      return RemoteExpenseModel.fromJson(body).toEntity();
+      return RemoteExpenseModel.fromJson(httpResponse).toEntity();
     } catch (error) {
       throw DomainError.unexpected;
     }

@@ -66,4 +66,12 @@ void main() {
     final future = sut.add(params);
     expect(future, throwsA(DomainError.unexpected));
   });
+
+  test('Should return an Expense if HttpClient returns 200', () async {
+    final expense = await sut.add(params);
+    expect(expense.id, apiResult['id']);
+    expect(expense.description, apiResult['description']);
+    expect(expense.amount, apiResult['amount']);
+    expect(expense.date, apiResult['date']);
+  });
 }

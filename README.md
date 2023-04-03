@@ -1,16 +1,19 @@
 # expensemanagerapp
 
-A new Flutter project.
+## Problema
 
-## Getting Started
+Atualmente muitas pessoas têm falta de controle financeiro e de organização de suas finanças
+pessoais, devido alguma dificuldade em acompanhar suas receitas e despesas, podendo
+resultar em gastos desnecessários e endividamento.
 
-This project is a starting point for a Flutter application.
+## Objetivo
+Este Software de Gestão de Despesas tem como objetivo ajudar os usuários a ter uma visão
+clara e organizada de suas finanças, permitindo que eles tomem decisões mais conscientes e
+sejam mais bem-sucedidos no gerenciamento de seu dinheiro.
 
-A few resources to get you started if this is your first Flutter project:
+## Público alvo
+O Expense Manager é destinado a pessoas que desejam gerenciar suas despesas pessoais e
+de negócios de forma eficiente e fácil.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+#
+> Trabalho final da disciplina Desenvolvimento Web e Mobile - UPF 2023/1

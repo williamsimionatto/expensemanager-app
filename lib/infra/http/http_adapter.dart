@@ -58,6 +58,8 @@ class HttpAdapter implements HttpClient {
         throw HttpError.badRequest;
       case 404:
         throw HttpError.notFound;
+      case 422:
+        throw HttpError.unprocessableEntity;
       default:
         throw HttpError.serverError;
     }

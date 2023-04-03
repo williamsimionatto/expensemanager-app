@@ -18,6 +18,8 @@ void main() {
       path: '/users',
       page: () => ExpensesPage(presenter),
     ));
+
+    await tester.pump(const Duration(seconds: 3));
   }
 
   tearDown(() {

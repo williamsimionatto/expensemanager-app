@@ -1,3 +1,4 @@
+import 'package:expensemanagerapp/data/http/http_error.dart';
 import 'package:expensemanagerapp/domain/entities/entities.dart';
 
 class RemotePeriodModel {
@@ -16,6 +17,12 @@ class RemotePeriodModel {
   });
 
   factory RemotePeriodModel.fromJson(Map json) {
+    if (!json.keys
+        .toSet()
+        .containsAll(['id', 'name', 'startDate', 'endDate', 'budget'])) {
+      throw HttpError.invalidData;
+    }
+
     return RemotePeriodModel(
       id: json['id'],
       name: json['name'],

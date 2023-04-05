@@ -1,4 +1,6 @@
+import 'package:expensemanagerapp/data/http/http.dart';
 import 'package:expensemanagerapp/data/usecases/usecases.dart';
+import 'package:expensemanagerapp/domain/helpers/domain_error.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -26,5 +28,11 @@ void main() {
     verify(
       () => httpClient.request(url: '$url/$periodId/category', method: 'get'),
     );
+  });
+
+  test('Should throw UnexpectedError if HttpClient returns 404', () async {
+    httpClient.mockRequestError(HttpError.notFound);
+    final future = sut.load(periodId);
+    expect(future, throwsA(DomainError.unexpected));
   });
 }

@@ -1,4 +1,5 @@
-import 'package:expensemanagerapp/data/http/http_client.dart';
+import 'package:expensemanagerapp/data/http/http.dart';
+import 'package:expensemanagerapp/domain/helpers/helpers.dart';
 
 class RemoteLoadPeriods {
   final String url;
@@ -7,6 +8,10 @@ class RemoteLoadPeriods {
   RemoteLoadPeriods({required this.url, required this.httpClient});
 
   Future<void> load() async {
-    await httpClient.request(url: url, method: 'get');
+    try {
+      await httpClient.request(url: url, method: 'get');
+    } catch (error) {
+      throw DomainError.unexpected;
+    }
   }
 }

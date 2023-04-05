@@ -30,4 +30,10 @@ void main() {
     final future = sut.load();
     expect(future, throwsA(DomainError.unexpected));
   });
+
+  test('Should throw UnexpectedError if HttpClient returns 500', () async {
+    httpClient.mockRequestError(HttpError.serverError);
+    final future = sut.load();
+    expect(future, throwsA(DomainError.unexpected));
+  });
 }

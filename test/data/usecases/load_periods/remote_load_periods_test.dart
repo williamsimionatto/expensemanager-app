@@ -63,4 +63,12 @@ void main() {
       ),
     ]);
   });
+
+  test(
+      'Should return UnexpectError if HttpClient returns 200 with invalid data',
+      () async {
+    httpClient.mockRequest(ApiFactory.makeInvalidList());
+    final future = sut.load();
+    expect(future, throwsA(DomainError.unexpected));
+  });
 }

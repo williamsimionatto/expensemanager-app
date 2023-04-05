@@ -1,4 +1,5 @@
 import 'package:expensemanagerapp/data/http/http.dart';
+import 'package:expensemanagerapp/domain/helpers/domain_error.dart';
 
 class RemoteLoadPeriodCategories {
   final String url;
@@ -7,7 +8,11 @@ class RemoteLoadPeriodCategories {
   RemoteLoadPeriodCategories({required this.url, required this.httpClient});
 
   Future<void> load(String periodId) async {
-    final uri = '$url/$periodId/category';
-    await httpClient.request(url: uri, method: 'get');
+    try {
+      final uri = '$url/$periodId/category';
+      await httpClient.request(url: uri, method: 'get');
+    } catch (error) {
+      throw DomainError.unexpected;
+    }
   }
 }

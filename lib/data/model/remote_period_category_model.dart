@@ -1,3 +1,4 @@
+import 'package:expensemanagerapp/data/http/http.dart';
 import 'package:expensemanagerapp/data/model/model.dart';
 import 'package:expensemanagerapp/domain/entities/entities.dart';
 
@@ -13,6 +14,10 @@ class RemotePeriodCategoryModel {
   });
 
   factory RemotePeriodCategoryModel.fromJson(Map json) {
+    if (!json.keys.toSet().containsAll(['id', 'category', 'budget'])) {
+      throw HttpError.invalidData;
+    }
+
     return RemotePeriodCategoryModel(
       id: json['id'],
       category: RemoteCategoryModel.fromJson(json['category']),

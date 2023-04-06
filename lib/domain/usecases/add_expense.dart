@@ -1,19 +1,15 @@
-import 'package:equatable/equatable.dart';
-import 'package:expensemanagerapp/domain/entities/expense_entity.dart';
+import 'package:expensemanagerapp/domain/entities/entities.dart';
 
 abstract class AddExpense {
   Future<ExpenseEntity> add(AddExpenseParams params);
 }
 
-class AddExpenseParams extends Equatable {
+class AddExpenseParams {
   final String description;
   final double amount;
   final String date;
   final int categoryId;
   final int periodId;
-
-  @override
-  List get props => [description, amount, date, categoryId, periodId];
 
   const AddExpenseParams({
     required this.description,

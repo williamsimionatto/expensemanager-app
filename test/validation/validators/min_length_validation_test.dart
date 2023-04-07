@@ -30,4 +30,9 @@ void main() {
     final formData = {'any_field': faker.randomGenerator.string(5, min: 5)};
     expect(sut.validate(formData), null);
   });
+
+  test('Should return null if value is bigger than min size', () {
+    final formData = {'any_field': faker.randomGenerator.string(10, min: 6)};
+    expect(sut.validate(formData), null);
+  });
 }

@@ -1,3 +1,4 @@
+import 'package:expensemanagerapp/presentation/protocols/validation.dart';
 import 'package:expensemanagerapp/validation/validators/validators.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -21,5 +22,15 @@ void main() {
     final error =
         sut.validate(field: 'any_field', input: {'any_field': 'any_value'});
     expect(error, null);
+  });
+
+  test('Should return the first error', () {
+    validation1.mockValidationError(ValidationError.invalidField);
+    validation2.mockValidationError(ValidationError.requiredField);
+    validation3.mockValidationError(ValidationError.invalidField);
+
+    final error =
+        sut.validate(field: 'any_field', input: {'any_field': 'any_value'});
+    expect(error, ValidationError.requiredField);
   });
 }

@@ -21,4 +21,19 @@ class ApiFactory {
       };
 
   static List<Map> makePeriodsList() => [makePeriod(), makePeriod()];
+
+  static Map makeCategory() => {
+        'id': faker.randomGenerator.integer(10, min: 1),
+        'name': faker.lorem.sentence(),
+        'description': faker.lorem.sentence(),
+      };
+
+  static Map makePeriodCategory() => {
+        'id': faker.randomGenerator.integer(10, min: 1),
+        'category': makeCategory(),
+        'budget': faker.randomGenerator.decimal(),
+      };
+
+  static List<Map> makePeriodCategories() =>
+      [makePeriodCategory(), makePeriodCategory()];
 }

@@ -1,3 +1,4 @@
+import 'package:expensemanagerapp/presentation/protocols/validation.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:expensemanagerapp/validation/validators/validators.dart';
@@ -13,5 +14,12 @@ void main() {
     final formData = {'any_field': 'any_value'};
 
     expect(sut.validate(formData), null);
+  });
+  
+
+  test('Should return error if value is empty', () {
+    final formData = {'any_field': ''};
+
+    expect(sut.validate(formData), ValidationError.requiredField);
   });
 }

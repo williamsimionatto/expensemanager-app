@@ -1,6 +1,7 @@
+import 'package:flutter_test/flutter_test.dart';
+
 import 'package:expensemanagerapp/presentation/protocols/validation.dart';
 import 'package:expensemanagerapp/validation/validators/validators.dart';
-import 'package:flutter_test/flutter_test.dart';
 
 import '../../validation/mocks/mocks.dart';
 

@@ -15,10 +15,15 @@ void main() {
 
     expect(sut.validate(formData), null);
   });
-  
 
   test('Should return error if value is empty', () {
     final formData = {'any_field': ''};
+
+    expect(sut.validate(formData), ValidationError.requiredField);
+  });
+
+  test('Should return error if value is null', () {
+    final formData = {'any_field': null};
 
     expect(sut.validate(formData), ValidationError.requiredField);
   });

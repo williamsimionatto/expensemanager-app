@@ -15,4 +15,8 @@ void main() {
     expect(sut.validate(formData), ValidationError.invalidField);
   });
 
+  test('Should return error if value is null', () {
+    final formData = {'any_field': null};
+    expect(sut.validate(formData), ValidationError.invalidField);
+  });
 }

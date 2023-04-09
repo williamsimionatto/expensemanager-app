@@ -1,9 +1,9 @@
-import 'package:expensemanagerapp/domain/usecases/usecases.dart';
 import 'package:expensemanagerapp/data/usecases/usecases.dart';
+import 'package:expensemanagerapp/domain/usecases/usecases.dart';
 
 import 'package:expensemanagerapp/main/factories/http/http.dart';
 
-LoadExpenses makeRemoteLoadExpenses() => RemoteLoadExpenses(
+AddExpense makeRemoteAddExpense() => RemoteAddExpense(
       url: makeApiUrl('expense'),
       httpClient: makeHttpAdapter(),
     );

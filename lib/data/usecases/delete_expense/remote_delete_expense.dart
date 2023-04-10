@@ -1,4 +1,5 @@
 import 'package:expensemanagerapp/data/http/http.dart';
+import 'package:expensemanagerapp/domain/helpers/helpers.dart';
 
 class RemoteDeleteExpense {
   final String url;
@@ -7,6 +8,10 @@ class RemoteDeleteExpense {
   RemoteDeleteExpense({required this.url, required this.httpClient});
 
   Future<void> delete({required String id}) async {
-    await httpClient.request(url: '$url/$id', method: 'delete');
+    try {
+      await httpClient.request(url: '$url/$id', method: 'delete');
+    } catch (error) {
+      throw DomainError.unexpected;
+    }
   }
 }

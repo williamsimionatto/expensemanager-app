@@ -1,3 +1,5 @@
+import 'package:expensemanagerapp/data/http/http_error.dart';
+import 'package:expensemanagerapp/domain/helpers/helpers.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -25,5 +27,11 @@ void main() {
     verify(
       () => httpClient.request(url: '$url/$id', method: 'delete'),
     );
+  });
+
+  test('Should throw UnexpectedError if HttpClient returns 404', () async {
+    httpClient.mockRequestError(HttpError.notFound);
+    final future = sut.delete(id: id);
+    expect(future, throwsA(DomainError.unexpected));
   });
 }

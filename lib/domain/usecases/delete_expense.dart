@@ -1,3 +1,3 @@
 abstract class DeleteExpense {
-  Future<void> delete(String id);
+  Future<void> delete({required String id});
 }

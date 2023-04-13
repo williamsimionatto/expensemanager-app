@@ -1,1 +1,3 @@
-abstract class AddExpensePresenter {}
+abstract class AddExpensePresenter {
+  Future<void> loadPeriods();
+}

@@ -18,20 +18,27 @@ void main() {
   late AddExpensePresenter sut;
   late ValidationSpy validation;
   late LoadPeriodsSpy loadPeriods;
+  late LoadPeriodCategoriesSpy loadPeriodCategories;
   late List<PeriodEntity> periods;
+  late List<PeriodCategoryEntity> periodCategories;
   late String periodId;
 
   setUp(() {
     periodId = faker.guid.guid();
     loadPeriods = LoadPeriodsSpy();
+    loadPeriodCategories = LoadPeriodCategoriesSpy();
     validation = ValidationSpy();
 
     periods = EntityFactory.makePeriods();
     loadPeriods.mockLoadPeriods(periods);
 
+    periodCategories = EntityFactory.makePeriodCategories();
+    loadPeriodCategories.mockLoadPeriodCategories(periodCategories);
+
     sut = GetXAddExpensePresenter(
       validation: validation,
       loadPeriod: loadPeriods,
+      loadPeriodCategory: loadPeriodCategories,
     );
   });
 
@@ -52,6 +59,28 @@ void main() {
       );
 
       await sut.loadPeriods();
+    });
+  });
+
+  group('LoadPeriodCategories', () {
+    test('Should call LoadPeriodCategories on load period categories',
+        () async {
+      await sut.loadPeriodCategories(periodId);
+      verify(() => loadPeriodCategories.load(periodId)).called(1);
+    });
+
+    test('Should emit correct event on LoadPeriodCategories fails', () async {
+      loadPeriodCategories
+          .mockLoadPeriodCategoriesError(DomainError.unexpected);
+
+      sut.periodCategoriesStream.listen(
+        null,
+        onError: expectAsync1(
+          (error) => expect(error, DomainError.unexpected.description),
+        ),
+      );
+
+      await sut.loadPeriodCategories(periodId);
     });
   });
 

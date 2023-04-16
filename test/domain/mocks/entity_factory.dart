@@ -20,4 +20,21 @@ class EntityFactory {
       );
 
   static List<PeriodEntity> makePeriods() => [makePeriod(), makePeriod()];
+
+  static CategoryEntity makeCategory() => CategoryEntity(
+        id: faker.randomGenerator.integer(10, min: 1),
+        name: faker.person.name(),
+        description: faker.lorem.sentence(),
+      );
+
+  static PeriodCategoryEntity makePeriodCategory() => PeriodCategoryEntity(
+        id: faker.randomGenerator.integer(10, min: 1),
+        budget: faker.randomGenerator.decimal(min: 1),
+        category: makeCategory(),
+      );
+
+  static List<PeriodCategoryEntity> makePeriodCategories() => [
+        makePeriodCategory(),
+        makePeriodCategory(),
+      ];
 }

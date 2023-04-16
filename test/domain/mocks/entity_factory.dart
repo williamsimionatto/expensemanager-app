@@ -10,4 +10,14 @@ class EntityFactory {
       );
 
   static List<ExpenseEntity> makeExpenses() => [makeExpense(), makeExpense()];
+
+  static PeriodEntity makePeriod() => PeriodEntity(
+        id: faker.randomGenerator.integer(10, min: 1),
+        name: faker.lorem.sentence(),
+        startDate: faker.date.dateTime().toIso8601String(),
+        endDate: faker.date.dateTime().toIso8601String(),
+        budget: faker.randomGenerator.decimal(min: 1),
+      );
+
+  static List<PeriodEntity> makePeriods() => [makePeriod(), makePeriod()];
 }

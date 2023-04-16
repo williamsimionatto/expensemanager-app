@@ -4,4 +4,6 @@ abstract class AddExpensePresenter {
   Future<void> loadPeriods();
 
   Stream<List<PeriodViewModel>?> get periodsStream;
+
+  void validatePeriod(String periodId);
 }

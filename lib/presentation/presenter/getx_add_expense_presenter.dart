@@ -12,10 +12,15 @@ import 'package:expensemanagerapp/ui/pages/pages.dart';
 class GetXAddExpensePresenter extends GetxController
     with FormManager
     implements AddExpensePresenter {
-  final LoadPeriods loadPeriod;
   final Validation validation;
+  final LoadPeriods loadPeriod;
+  final LoadPeriodCategories loadPeriodCategory;
 
-  GetXAddExpensePresenter({required this.validation, required this.loadPeriod});
+  GetXAddExpensePresenter({
+    required this.validation,
+    required this.loadPeriod,
+    required this.loadPeriodCategory,
+  });
 
   final _periods = Rx<List<PeriodViewModel>>([]);
 
@@ -40,6 +45,11 @@ class GetXAddExpensePresenter extends GetxController
         StackTrace.empty,
       );
     }
+  }
+
+  @override
+  Future<void> loadPeriodCategories(String periodId) async {
+    await loadPeriodCategory.load(periodId);
   }
 
   @override

@@ -23,6 +23,7 @@ class GetXAddExpensePresenter extends GetxController
   });
 
   final _periods = Rx<List<PeriodViewModel>>([]);
+  final _periodCategories = Rx<List<PeriodCategoryViewModel>>([]);
 
   final _periodError = Rx<UIError?>(null);
 
@@ -34,6 +35,11 @@ class GetXAddExpensePresenter extends GetxController
   @override
   Stream<List<PeriodViewModel>> get periodsStream =>
       _periods.stream.map((periods) => periods.toList());
+
+  @override
+  Stream<List<PeriodCategoryViewModel>> get periodCategoriesStream =>
+      _periodCategories.stream
+          .map((periodCategories) => periodCategories.toList());
 
   @override
   Future<void> loadPeriods() async {
@@ -49,7 +55,14 @@ class GetXAddExpensePresenter extends GetxController
 
   @override
   Future<void> loadPeriodCategories(String periodId) async {
-    await loadPeriodCategory.load(periodId);
+    try {
+      await loadPeriodCategory.load(periodId);
+    } catch (error) {
+      _periodCategories.subject.addError(
+        DomainError.unexpected.description,
+        StackTrace.empty,
+      );
+    }
   }
 
   @override

@@ -68,6 +68,20 @@ void main() {
       await sut.loadPeriodCategories(periodId);
       verify(() => loadPeriodCategories.load(periodId)).called(1);
     });
+
+    test('Should emit correct event on LoadPeriodCategories fails', () async {
+      loadPeriodCategories
+          .mockLoadPeriodCategoriesError(DomainError.unexpected);
+
+      sut.periodCategoriesStream.listen(
+        null,
+        onError: expectAsync1(
+          (error) => expect(error, DomainError.unexpected.description),
+        ),
+      );
+
+      await sut.loadPeriodCategories(periodId);
+    });
   });
 
   group('Period', () {

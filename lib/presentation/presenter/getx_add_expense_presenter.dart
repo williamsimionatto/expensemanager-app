@@ -44,7 +44,16 @@ class GetXAddExpensePresenter extends GetxController
   @override
   Future<void> loadPeriods() async {
     try {
-      await loadPeriod.load();
+      final periods = await loadPeriod.load();
+      _periods.value = periods
+          .map((period) => PeriodViewModel(
+                id: period.id,
+                name: period.name,
+                startDate: period.startDate,
+                endDate: period.endDate,
+                budget: period.budget,
+              ))
+          .toList();
     } catch (error) {
       _periods.subject.addError(
         DomainError.unexpected.description,

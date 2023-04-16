@@ -70,6 +70,8 @@ void main() {
 
       sut.periodErrorStream?.listen(
           expectAsync1((error) => expect(error, UIError.invalidField)));
+      sut.isFormValidStream
+          ?.listen(expectAsync1((isValid) => expect(isValid, false)));
 
       sut.validatePeriod(periodId);
     });

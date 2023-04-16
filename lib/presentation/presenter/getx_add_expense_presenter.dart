@@ -1,4 +1,6 @@
+import 'package:expensemanagerapp/presentation/mixins/mixins.dart';
 import 'package:expensemanagerapp/ui/helpers/errors/ui_error.dart';
+import 'package:expensemanagerapp/ui/mixins/loading_manager.dart';
 import 'package:get/get.dart';
 
 import 'package:expensemanagerapp/domain/helpers/helpers.dart';
@@ -8,7 +10,9 @@ import 'package:expensemanagerapp/presentation/protocols/validation.dart';
 
 import 'package:expensemanagerapp/ui/pages/pages.dart';
 
-class GetXAddExpensePresenter implements AddExpensePresenter {
+class GetXAddExpensePresenter extends GetxController
+    with FormManager
+    implements AddExpensePresenter {
   final LoadPeriods loadPeriod;
   final Validation validation;
 
@@ -43,6 +47,7 @@ class GetXAddExpensePresenter implements AddExpensePresenter {
   void validatePeriod(String periodId) {
     _periodId = periodId;
     _periodError.value = _validateField('periodId');
+    _validateForm();
   }
 
   UIError? _validateField(String field) {
@@ -58,4 +63,7 @@ class GetXAddExpensePresenter implements AddExpensePresenter {
         return null;
     }
   }
+
+  void _validateForm() =>
+      isFormValid = _periodError.value == null && _periodId != null;
 }

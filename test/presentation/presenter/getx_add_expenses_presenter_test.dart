@@ -35,22 +35,24 @@ void main() {
     );
   });
 
-  test('Should call LoadPeriods on load periods', () async {
-    await sut.loadPeriods();
-    verify(() => loadPeriods.load()).called(1);
-  });
+  group('LoadPeriods', () {
+    test('Should call LoadPeriods on load periods', () async {
+      await sut.loadPeriods();
+      verify(() => loadPeriods.load()).called(1);
+    });
 
-  test('Should emit correct event on LoadPeriods fails', () async {
-    loadPeriods.mockLoadPeriodsError(DomainError.unexpected);
+    test('Should emit correct event on LoadPeriods fails', () async {
+      loadPeriods.mockLoadPeriodsError(DomainError.unexpected);
 
-    sut.periodsStream.listen(
-      null,
-      onError: expectAsync1(
-        (error) => expect(error, DomainError.unexpected.description),
-      ),
-    );
+      sut.periodsStream.listen(
+        null,
+        onError: expectAsync1(
+          (error) => expect(error, DomainError.unexpected.description),
+        ),
+      );
 
-    await sut.loadPeriods();
+      await sut.loadPeriods();
+    });
   });
 
   group('Period', () {
@@ -90,7 +92,8 @@ void main() {
     });
 
     test('Should emit null if period validation succeeds', () {
-      sut.periodErrorStream?.listen(expectAsync1((error) => expect(error, null)));
+      sut.periodErrorStream
+          ?.listen(expectAsync1((error) => expect(error, null)));
       sut.isFormValidStream
           ?.listen(expectAsync1((isValid) => expect(isValid, false)));
 

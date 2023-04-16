@@ -1,5 +1,3 @@
-import 'package:expensemanagerapp/presentation/protocols/validation.dart';
-import 'package:expensemanagerapp/ui/helpers/errors/ui_error.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -8,7 +6,9 @@ import 'package:expensemanagerapp/domain/entities/entities.dart';
 import 'package:expensemanagerapp/domain/helpers/helpers.dart';
 
 import 'package:expensemanagerapp/presentation/presenter/presenter.dart';
+import 'package:expensemanagerapp/presentation/protocols/validation.dart';
 
+import 'package:expensemanagerapp/ui/helpers/helpers.dart';
 import 'package:expensemanagerapp/ui/pages/pages.dart';
 
 import '../../domain/mocks/mocks.dart';

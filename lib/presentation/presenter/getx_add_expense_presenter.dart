@@ -1,3 +1,4 @@
+import 'package:expensemanagerapp/ui/helpers/errors/ui_error.dart';
 import 'package:get/get.dart';
 
 import 'package:expensemanagerapp/domain/helpers/helpers.dart';
@@ -14,6 +15,11 @@ class GetXAddExpensePresenter implements AddExpensePresenter {
   GetXAddExpensePresenter({required this.validation, required this.loadPeriod});
 
   final _periods = Rx<List<PeriodViewModel>>([]);
+
+  final _periodError = Rx<UIError?>(null);
+
+  @override
+  Stream<UIError?> get periodErrorStream => _periodError.stream;
 
   String? _periodId;
 
@@ -36,14 +42,20 @@ class GetXAddExpensePresenter implements AddExpensePresenter {
   @override
   void validatePeriod(String periodId) {
     _periodId = periodId;
-    _validateField('periodId');
+    _periodError.value = _validateField('periodId');
   }
 
-  void _validateField(String field) {
+  UIError? _validateField(String field) {
     final formData = {
       'periodId': _periodId,
     };
 
-    validation.validate(field: field, input: formData);
+    final error = validation.validate(field: field, input: formData);
+    switch (error) {
+      case ValidationError.invalidField:
+        return UIError.invalidField;
+      default:
+        return null;
+    }
   }
 }

@@ -1,3 +1,5 @@
+import 'package:expensemanagerapp/presentation/protocols/validation.dart';
+import 'package:expensemanagerapp/ui/helpers/errors/ui_error.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -61,6 +63,15 @@ void main() {
 
       verify(() => validation.validate(field: 'periodId', input: formDate))
           .called(1);
+    });
+
+    test('Should emit invalidFieldError if period value is invalid', () async {
+      validation.mockValidationError(error: ValidationError.invalidField);
+
+      sut.periodErrorStream?.listen(
+          expectAsync1((error) => expect(error, UIError.invalidField)));
+
+      sut.validatePeriod(periodId);
     });
   });
 }

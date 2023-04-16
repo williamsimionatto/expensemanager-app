@@ -74,6 +74,7 @@ void main() {
           ?.listen(expectAsync1((isValid) => expect(isValid, false)));
 
       sut.validatePeriod(periodId);
+      sut.validatePeriod(periodId);
     });
 
     test('Should emit requiredFieldError if period value is empty', () async {
@@ -84,6 +85,16 @@ void main() {
       sut.isFormValidStream
           ?.listen(expectAsync1((isValid) => expect(isValid, false)));
 
+      sut.validatePeriod(periodId);
+      sut.validatePeriod(periodId);
+    });
+
+    test('Should emit null if period validation succeeds', () {
+      sut.periodErrorStream?.listen(expectAsync1((error) => expect(error, null)));
+      sut.isFormValidStream
+          ?.listen(expectAsync1((isValid) => expect(isValid, false)));
+
+      sut.validatePeriod(periodId);
       sut.validatePeriod(periodId);
     });
   });

@@ -46,13 +46,15 @@ class GetXAddExpensePresenter extends GetxController
     try {
       final periods = await loadPeriod.load();
       _periods.value = periods
-          .map((period) => PeriodViewModel(
-                id: period.id,
-                name: period.name,
-                startDate: period.startDate,
-                endDate: period.endDate,
-                budget: period.budget,
-              ))
+          .map(
+            (period) => PeriodViewModel(
+              id: period.id,
+              name: period.name,
+              startDate: period.startDate,
+              endDate: period.endDate,
+              budget: period.budget,
+            ),
+          )
           .toList();
     } catch (error) {
       _periods.subject.addError(
@@ -65,7 +67,20 @@ class GetXAddExpensePresenter extends GetxController
   @override
   Future<void> loadPeriodCategories(String periodId) async {
     try {
-      await loadPeriodCategory.load(periodId);
+      final periodCategories = await loadPeriodCategory.load(periodId);
+      _periodCategories.value = periodCategories
+          .map(
+            (periodCategory) => PeriodCategoryViewModel(
+              id: periodCategory.id,
+              budget: periodCategory.budget,
+              category: CategoryViewModel(
+                id: periodCategory.category.id,
+                name: periodCategory.category.name,
+                description: periodCategory.category.description,
+              ),
+            ),
+          )
+          .toList();
     } catch (error) {
       _periodCategories.subject.addError(
         DomainError.unexpected.description,

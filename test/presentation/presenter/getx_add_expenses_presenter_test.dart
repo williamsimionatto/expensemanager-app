@@ -160,5 +160,17 @@ void main() {
       sut.validateCategory(categoryId);
       sut.validateCategory(categoryId);
     });
+
+    test('Should emit requiredFieldError if category value is empty', () async {
+      validation.mockValidationError(error: ValidationError.requiredField);
+
+      sut.categoryErrorStream?.listen(
+          expectAsync1((error) => expect(error, UIError.requiredField)));
+      sut.isFormValidStream
+          ?.listen(expectAsync1((isValid) => expect(isValid, false)));
+
+      sut.validateCategory(categoryId);
+      sut.validateCategory(categoryId);
+    });
   });
 }

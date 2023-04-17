@@ -10,27 +10,49 @@ import 'package:expensemanagerapp/ui/helpers/helpers.dart';
 import 'package:expensemanagerapp/ui/pages/pages.dart';
 
 class GetXAddExpensePresenter extends GetxController
-    with FormManager
+    with FormManager, LoadingManager, ErrorManager, SuccessManager
     implements AddExpensePresenter {
   final Validation validation;
   final LoadPeriods loadPeriod;
   final LoadPeriodCategories loadPeriodCategory;
+  final AddExpense addExpense;
 
   GetXAddExpensePresenter({
     required this.validation,
     required this.loadPeriod,
     required this.loadPeriodCategory,
+    required this.addExpense,
   });
 
   final _periods = Rx<List<PeriodViewModel>>([]);
   final _periodCategories = Rx<List<PeriodCategoryViewModel>>([]);
 
   final _periodError = Rx<UIError?>(null);
+  final _categoryError = Rx<UIError?>(null);
+  final _descriptionError = Rx<UIError?>(null);
+  final _amountError = Rx<UIError?>(null);
+  final _dateError = Rx<UIError?>(null);
 
   @override
   Stream<UIError?> get periodErrorStream => _periodError.stream;
 
+  @override
+  Stream<UIError?> get categoryErrorStream => _categoryError.stream;
+
+  @override
+  Stream<UIError?> get descriptionErrorStream => _descriptionError.stream;
+
+  @override
+  Stream<UIError?> get amountErrorStream => _amountError.stream;
+
+  @override
+  Stream<UIError?> get dateErrorStream => _dateError.stream;
+
   String? _periodId;
+  String? _categoryId;
+  String? _description;
+  String? _amount;
+  String? _date;
 
   @override
   Stream<List<PeriodViewModel>> get periodsStream =>
@@ -90,15 +112,69 @@ class GetXAddExpensePresenter extends GetxController
   }
 
   @override
+  Future<void> add() async {
+    try {
+      isLoading = true;
+      mainError = null;
+
+      final params = AddExpenseParams(
+        description: _description!,
+        amount: double.parse(_amount!),
+        date: _date!,
+        categoryId: int.parse(_categoryId!),
+        periodId: int.parse(_periodId!),
+      );
+
+      await addExpense.add(params);
+      success = 'Expense added successfully';
+    } catch (error) {
+      mainError = UIError.unexpected;
+      isLoading = false;
+    }
+  }
+
+  @override
   void validatePeriod(String periodId) {
     _periodId = periodId;
     _periodError.value = _validateField('periodId');
     _validateForm();
   }
 
+  @override
+  void validateCategory(String categoryId) {
+    _categoryId = categoryId;
+    _categoryError.value = _validateField('categoryId');
+    _validateForm();
+  }
+
+  @override
+  void validateDescription(String description) {
+    _description = description;
+    _descriptionError.value = _validateField('description');
+    _validateForm();
+  }
+
+  @override
+  void validateAmount(String amount) {
+    _amount = amount;
+    _amountError.value = _validateField('amount');
+    _validateForm();
+  }
+
+  @override
+  void validateDate(String date) {
+    _date = date;
+    _dateError.value = _validateField('date');
+    _validateForm();
+  }
+
   UIError? _validateField(String field) {
     final formData = {
       'periodId': _periodId,
+      'categoryId': _categoryId,
+      'description': _description,
+      'amount': _amount,
+      'date': _date,
     };
 
     final error = validation.validate(field: field, input: formData);
@@ -112,5 +188,14 @@ class GetXAddExpensePresenter extends GetxController
     }
   }
 
-  void _validateForm() => isFormValid = false;
+  void _validateForm() => isFormValid = _periodError.value == null &&
+      _categoryError.value == null &&
+      _descriptionError.value == null &&
+      _amountError.value == null &&
+      _dateError.value == null &&
+      _periodId != null &&
+      _categoryId != null &&
+      _description != null &&
+      _amount != null &&
+      _date != null;
 }

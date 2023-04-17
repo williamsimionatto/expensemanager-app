@@ -22,9 +22,12 @@ void main() {
   late List<PeriodEntity> periods;
   late List<PeriodCategoryEntity> periodCategories;
   late String periodId;
+  late String categoryId;
 
   setUp(() {
     periodId = faker.guid.guid();
+    categoryId = faker.guid.guid();
+
     loadPeriods = LoadPeriodsSpy();
     loadPeriodCategories = LoadPeriodCategoriesSpy();
     validation = ValidationSpy();
@@ -88,6 +91,7 @@ void main() {
     test('Shoul call Validation with correct period id', () {
       final formDate = {
         'periodId': periodId,
+        'categoryId': null,
       };
 
       sut.validatePeriod(periodId);
@@ -128,6 +132,20 @@ void main() {
 
       sut.validatePeriod(periodId);
       sut.validatePeriod(periodId);
+    });
+  });
+
+  group('Category', () {
+    test('Should call Validation with correct category id', () {
+      final formDate = {
+        'periodId': null,
+        'categoryId': categoryId,
+      };
+
+      sut.validateCategory(categoryId);
+
+      verify(() => validation.validate(field: 'categoryId', input: formDate))
+          .called(1);
     });
   });
 }

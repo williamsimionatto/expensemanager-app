@@ -225,5 +225,15 @@ void main() {
       sut.validateDescription(description);
       sut.validateDescription(description);
     });
+
+    test('Should emit null if description validation succeeds', () {
+      sut.descriptionErrorStream
+          ?.listen(expectAsync1((error) => expect(error, null)));
+      sut.isFormValidStream
+          ?.listen(expectAsync1((isValid) => expect(isValid, false)));
+
+      sut.validateDescription(description);
+      sut.validateDescription(description);
+    });
   });
 }

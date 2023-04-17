@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -98,6 +96,8 @@ void main() {
       final formDate = {
         'periodId': periodId,
         'categoryId': null,
+        'description': null,
+        'amount': null,
       };
 
       sut.validatePeriod(periodId);
@@ -146,6 +146,8 @@ void main() {
       final formDate = {
         'periodId': null,
         'categoryId': categoryId,
+        'description': null,
+        'amount': null,
       };
 
       sut.validateCategory(categoryId);
@@ -196,6 +198,7 @@ void main() {
         'periodId': null,
         'categoryId': null,
         'description': description,
+        'amount': null,
       };
 
       sut.validateDescription(description);

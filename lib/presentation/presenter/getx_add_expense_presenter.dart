@@ -164,5 +164,14 @@ class GetXAddExpensePresenter extends GetxController
     }
   }
 
-  void _validateForm() => isFormValid = false;
+  void _validateForm() => isFormValid = _periodError.value == null &&
+      _categoryError.value == null &&
+      _descriptionError.value == null &&
+      _amountError.value == null &&
+      _dateError.value == null &&
+      _periodId != null &&
+      _categoryId != null &&
+      _description != null &&
+      _amount != null &&
+      _date != null;
 }

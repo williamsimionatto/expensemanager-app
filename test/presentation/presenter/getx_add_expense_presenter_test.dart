@@ -349,4 +349,14 @@ void main() {
       sut.validateDate(date);
     });
   });
+
+  test('Should emit form valid if all fields are valid', () async {
+    expect(sut.isFormValidStream, emitsInOrder([false, true]));
+
+    sut.validatePeriod(periodId);
+    sut.validateCategory(categoryId);
+    sut.validateDescription(description);
+    sut.validateAmount(amount);
+    sut.validateDate(date);
+  });
 }

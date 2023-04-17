@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -24,11 +26,13 @@ void main() {
   late String periodId;
   late String categoryId;
   late String description;
+  late String amount;
 
   setUp(() {
     periodId = faker.guid.guid();
     categoryId = faker.guid.guid();
     description = faker.lorem.sentence();
+    amount = faker.randomGenerator.decimal().toString();
 
     loadPeriods = LoadPeriodsSpy();
     loadPeriodCategories = LoadPeriodCategoriesSpy();
@@ -234,6 +238,56 @@ void main() {
 
       sut.validateDescription(description);
       sut.validateDescription(description);
+    });
+  });
+
+  group('Amount', () {
+    test('Should call Validation with correct amount', () {
+      final formDate = {
+        'periodId': null,
+        'categoryId': null,
+        'description': null,
+        'amount': amount,
+      };
+
+      sut.validateAmount(amount);
+
+      verify(() => validation.validate(field: 'amount', input: formDate))
+          .called(1);
+    });
+
+    test('Should emit invalidFieldError if amount value is invalid', () async {
+      validation.mockValidationError(error: ValidationError.invalidField);
+
+      sut.amountErrorStream?.listen(
+          expectAsync1((error) => expect(error, UIError.invalidField)));
+      sut.isFormValidStream
+          ?.listen(expectAsync1((isValid) => expect(isValid, false)));
+
+      sut.validateAmount(amount);
+      sut.validateAmount(amount);
+    });
+
+    test('Should emit requiredFieldError if amount value is empty', () async {
+      validation.mockValidationError(error: ValidationError.requiredField);
+
+      sut.amountErrorStream?.listen(
+          expectAsync1((error) => expect(error, UIError.requiredField)));
+      sut.isFormValidStream
+          ?.listen(expectAsync1((isValid) => expect(isValid, false)));
+
+      sut.validateAmount(amount);
+      sut.validateAmount(amount);
+    });
+
+    test('Should emit null if amount validation succeeds', () {
+      sut.amountErrorStream
+          ?.listen(expectAsync1((error) => expect(error, null)));
+      sut.isFormValidStream
+          ?.listen(expectAsync1((isValid) => expect(isValid, false)));
+
+      sut.validateAmount(amount);
+      sut.validateAmount(amount);
     });
   });
 }

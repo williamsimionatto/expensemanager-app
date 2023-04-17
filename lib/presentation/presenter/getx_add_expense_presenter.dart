@@ -28,6 +28,7 @@ class GetXAddExpensePresenter extends GetxController
   final _periodError = Rx<UIError?>(null);
   final _categoryError = Rx<UIError?>(null);
   final _descriptionError = Rx<UIError?>(null);
+  final _amountError = Rx<UIError?>(null);
 
   @override
   Stream<UIError?> get periodErrorStream => _periodError.stream;
@@ -38,9 +39,13 @@ class GetXAddExpensePresenter extends GetxController
   @override
   Stream<UIError?> get descriptionErrorStream => _descriptionError.stream;
 
+  @override
+  Stream<UIError?> get amountErrorStream => _amountError.stream;
+
   String? _periodId;
   String? _categoryId;
   String? _description;
+  String? _amount;
 
   @override
   Stream<List<PeriodViewModel>> get periodsStream =>
@@ -120,11 +125,19 @@ class GetXAddExpensePresenter extends GetxController
     _validateForm();
   }
 
+  @override
+  void validateAmount(String amount) {
+    _amount = amount;
+    _amountError.value = _validateField('amount');
+    _validateForm();
+  }
+
   UIError? _validateField(String field) {
     final formData = {
       'periodId': _periodId,
       'categoryId': _categoryId,
       'description': _description,
+      'amount': _amount,
     };
 
     final error = validation.validate(field: field, input: formData);

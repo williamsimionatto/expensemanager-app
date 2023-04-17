@@ -1,4 +1,4 @@
-enum UIError { requiredField, invalidField }
+enum UIError { requiredField, invalidField, unexpected }
 
 extension UIErrorExtension on UIError {
   String get description {
@@ -7,6 +7,8 @@ extension UIErrorExtension on UIError {
         return 'Campo obrigatório';
       case UIError.invalidField:
         return 'Campo inválido';
+      case UIError.unexpected:
+        return 'Algo errado aconteceu. Tente novamente em breve.';
     }
   }
 }

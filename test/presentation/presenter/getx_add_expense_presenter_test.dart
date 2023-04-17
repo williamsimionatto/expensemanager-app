@@ -411,4 +411,19 @@ void main() {
     );
     await sut.add();
   });
+
+  test('Should emit correct events on UnexpectedError', () async {
+    addExpense.mockError(DomainError.unexpected);
+
+    sut.validatePeriod(periodId);
+    sut.validateCategory(categoryId);
+    sut.validateDescription(description);
+    sut.validateAmount(amount);
+    sut.validateDate(date);
+
+    expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+    expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+
+    await sut.add();
+  });
 }

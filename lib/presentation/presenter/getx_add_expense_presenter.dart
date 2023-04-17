@@ -113,19 +113,24 @@ class GetXAddExpensePresenter extends GetxController
 
   @override
   Future<void> add() async {
-    isLoading = true;
-    mainError = null;
+    try {
+      isLoading = true;
+      mainError = null;
 
-    final params = AddExpenseParams(
-      description: _description!,
-      amount: double.parse(_amount!),
-      date: _date!,
-      categoryId: int.parse(_categoryId!),
-      periodId: int.parse(_periodId!),
-    );
+      final params = AddExpenseParams(
+        description: _description!,
+        amount: double.parse(_amount!),
+        date: _date!,
+        categoryId: int.parse(_categoryId!),
+        periodId: int.parse(_periodId!),
+      );
 
-    await addExpense.add(params);
-    success = 'Expense added successfully';
+      await addExpense.add(params);
+      success = 'Expense added successfully';
+    } catch (error) {
+      mainError = UIError.unexpected;
+      isLoading = false;
+    }
   }
 
   @override

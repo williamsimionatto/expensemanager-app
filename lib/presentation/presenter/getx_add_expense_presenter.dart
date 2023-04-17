@@ -10,7 +10,7 @@ import 'package:expensemanagerapp/ui/helpers/helpers.dart';
 import 'package:expensemanagerapp/ui/pages/pages.dart';
 
 class GetXAddExpensePresenter extends GetxController
-    with FormManager
+    with FormManager, LoadingManager, ErrorManager, SuccessManager
     implements AddExpensePresenter {
   final Validation validation;
   final LoadPeriods loadPeriod;
@@ -113,6 +113,9 @@ class GetXAddExpensePresenter extends GetxController
 
   @override
   Future<void> add() async {
+    isLoading = true;
+    mainError = null;
+
     final params = AddExpenseParams(
       description: _description!,
       amount: double.parse(_amount!),
@@ -122,6 +125,7 @@ class GetXAddExpensePresenter extends GetxController
     );
 
     await addExpense.add(params);
+    success = 'Expense added successfully';
   }
 
   @override

@@ -395,4 +395,20 @@ void main() {
     await sut.add();
     verify(() => addExpense.add(params)).called(1);
   });
+
+  test('Should emit correct events on AddExpense success', () async {
+    sut.validatePeriod(periodId);
+    sut.validateCategory(categoryId);
+    sut.validateDescription(description);
+    sut.validateAmount(amount);
+    sut.validateDate(date);
+
+    expectLater(sut.mainErrorStream, emits(null));
+    expectLater(sut.isLoadingStream, emits(true));
+    expectLater(
+      sut.successMessageStream,
+      emits('Expense added successfully'),
+    );
+    await sut.add();
+  });
 }

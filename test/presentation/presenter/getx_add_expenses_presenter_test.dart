@@ -147,5 +147,18 @@ void main() {
       verify(() => validation.validate(field: 'categoryId', input: formDate))
           .called(1);
     });
+
+    test('Should emit invalidFieldError if category value is invalid',
+        () async {
+      validation.mockValidationError(error: ValidationError.invalidField);
+
+      sut.categoryErrorStream?.listen(
+          expectAsync1((error) => expect(error, UIError.invalidField)));
+      sut.isFormValidStream
+          ?.listen(expectAsync1((isValid) => expect(isValid, false)));
+
+      sut.validateCategory(categoryId);
+      sut.validateCategory(categoryId);
+    });
   });
 }

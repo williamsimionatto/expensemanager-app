@@ -12,6 +12,7 @@ abstract class AddExpensePresenter {
   Stream<bool?>? get isFormValidStream;
 
   Stream<UIError?>? get periodErrorStream;
+  Stream<UIError?>? get categoryErrorStream;
 
   void validatePeriod(String periodId);
   void validateCategory(String categoryId);

@@ -26,9 +26,13 @@ class GetXAddExpensePresenter extends GetxController
   final _periodCategories = Rx<List<PeriodCategoryViewModel>>([]);
 
   final _periodError = Rx<UIError?>(null);
+  final _categoryError = Rx<UIError?>(null);
 
   @override
   Stream<UIError?> get periodErrorStream => _periodError.stream;
+
+  @override
+  Stream<UIError?> get categoryErrorStream => _categoryError.stream;
 
   String? _periodId;
   String? _categoryId;
@@ -100,7 +104,7 @@ class GetXAddExpensePresenter extends GetxController
   @override
   void validateCategory(String categoryId) {
     _categoryId = categoryId;
-    _periodError.value = _validateField('categoryId');
+    _categoryError.value = _validateField('categoryId');
     _validateForm();
   }
 

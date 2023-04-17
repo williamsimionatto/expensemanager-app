@@ -172,5 +172,15 @@ void main() {
       sut.validateCategory(categoryId);
       sut.validateCategory(categoryId);
     });
+
+    test('Should emit null if category validation succeeds', () {
+      sut.categoryErrorStream
+          ?.listen(expectAsync1((error) => expect(error, null)));
+      sut.isFormValidStream
+          ?.listen(expectAsync1((isValid) => expect(isValid, false)));
+
+      sut.validateCategory(categoryId);
+      sut.validateCategory(categoryId);
+    });
   });
 }

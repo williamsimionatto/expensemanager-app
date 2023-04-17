@@ -212,5 +212,18 @@ void main() {
       sut.validateDescription(description);
       sut.validateDescription(description);
     });
+
+    test('Should emit requiredFieldError if description value is empty',
+        () async {
+      validation.mockValidationError(error: ValidationError.requiredField);
+
+      sut.descriptionErrorStream?.listen(
+          expectAsync1((error) => expect(error, UIError.requiredField)));
+      sut.isFormValidStream
+          ?.listen(expectAsync1((isValid) => expect(isValid, false)));
+
+      sut.validateDescription(description);
+      sut.validateDescription(description);
+    });
   });
 }

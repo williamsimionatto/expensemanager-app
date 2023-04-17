@@ -16,4 +16,5 @@ abstract class AddExpensePresenter {
 
   void validatePeriod(String periodId);
   void validateCategory(String categoryId);
+  void validateDescription(String description);
 }

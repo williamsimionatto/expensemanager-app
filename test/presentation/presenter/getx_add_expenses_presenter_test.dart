@@ -23,10 +23,12 @@ void main() {
   late List<PeriodCategoryEntity> periodCategories;
   late String periodId;
   late String categoryId;
+  late String description;
 
   setUp(() {
     periodId = faker.guid.guid();
     categoryId = faker.guid.guid();
+    description = faker.lorem.sentence();
 
     loadPeriods = LoadPeriodsSpy();
     loadPeriodCategories = LoadPeriodCategoriesSpy();
@@ -181,6 +183,21 @@ void main() {
 
       sut.validateCategory(categoryId);
       sut.validateCategory(categoryId);
+    });
+  });
+
+  group('Description', () {
+    test('Should call Validation with correct description', () {
+      final formDate = {
+        'periodId': null,
+        'categoryId': null,
+        'description': description,
+      };
+
+      sut.validateDescription(description);
+
+      verify(() => validation.validate(field: 'description', input: formDate))
+          .called(1);
     });
   });
 }

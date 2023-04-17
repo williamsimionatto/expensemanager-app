@@ -15,11 +15,13 @@ class GetXAddExpensePresenter extends GetxController
   final Validation validation;
   final LoadPeriods loadPeriod;
   final LoadPeriodCategories loadPeriodCategory;
+  final AddExpense addExpense;
 
   GetXAddExpensePresenter({
     required this.validation,
     required this.loadPeriod,
     required this.loadPeriodCategory,
+    required this.addExpense,
   });
 
   final _periods = Rx<List<PeriodViewModel>>([]);
@@ -107,6 +109,19 @@ class GetXAddExpensePresenter extends GetxController
         StackTrace.empty,
       );
     }
+  }
+
+  @override
+  Future<void> add() async {
+    final params = AddExpenseParams(
+      description: _description!,
+      amount: double.parse(_amount!),
+      date: _date!,
+      categoryId: int.parse(_categoryId!),
+      periodId: int.parse(_periodId!),
+    );
+
+    await addExpense.add(params);
   }
 
   @override

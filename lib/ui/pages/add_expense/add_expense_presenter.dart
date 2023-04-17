@@ -5,6 +5,7 @@ import 'package:expensemanagerapp/ui/helpers/errors/errors.dart';
 abstract class AddExpensePresenter {
   Future<void> loadPeriods();
   Future<void> loadPeriodCategories(String periodId);
+  Future<void> add();
 
   Stream<List<PeriodViewModel>?> get periodsStream;
   Stream<List<PeriodCategoryViewModel>?> get periodCategoriesStream;

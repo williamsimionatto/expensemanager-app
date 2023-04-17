@@ -1,3 +1,4 @@
+import 'package:expensemanagerapp/domain/usecases/usecases.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -11,6 +12,7 @@ import 'package:expensemanagerapp/presentation/protocols/validation.dart';
 import 'package:expensemanagerapp/ui/helpers/helpers.dart';
 import 'package:expensemanagerapp/ui/pages/pages.dart';
 
+import '../../data/mocks/params_factory.dart';
 import '../../domain/mocks/mocks.dart';
 import '../mocks/mocks.dart';
 
@@ -19,17 +21,27 @@ void main() {
   late ValidationSpy validation;
   late LoadPeriodsSpy loadPeriods;
   late LoadPeriodCategoriesSpy loadPeriodCategories;
+  late AddExpenseSpy addExpense;
+
   late List<PeriodEntity> periods;
   late List<PeriodCategoryEntity> periodCategories;
+
   late String periodId;
   late String categoryId;
   late String description;
   late String amount;
   late String date;
 
+  late ExpenseEntity expense;
+
+  setUpAll(() {
+    registerFallbackValue(EntityFactory.makeExpense());
+    registerFallbackValue(ParamsFactory.makeAddExpenseParams());
+  });
+
   setUp(() {
-    periodId = faker.guid.guid();
-    categoryId = faker.guid.guid();
+    periodId = faker.randomGenerator.integer(10).toString();
+    categoryId = faker.randomGenerator.integer(10).toString();
     description = faker.lorem.sentence();
     amount = faker.randomGenerator.decimal().toString();
     date = faker.date.dateTime().toIso8601String();
@@ -44,10 +56,15 @@ void main() {
     periodCategories = EntityFactory.makePeriodCategories();
     loadPeriodCategories.mockLoadPeriodCategories(periodCategories);
 
+    expense = EntityFactory.makeExpense();
+    addExpense = AddExpenseSpy();
+    addExpense.mockAdd(expense);
+
     sut = GetXAddExpensePresenter(
       validation: validation,
       loadPeriod: loadPeriods,
       loadPeriodCategory: loadPeriodCategories,
+      addExpense: addExpense,
     );
   });
 
@@ -358,5 +375,24 @@ void main() {
     sut.validateDescription(description);
     sut.validateAmount(amount);
     sut.validateDate(date);
+  });
+
+  test('Should call AddExpense with correct values', () async {
+    sut.validatePeriod(periodId);
+    sut.validateCategory(categoryId);
+    sut.validateDescription(description);
+    sut.validateAmount(amount);
+    sut.validateDate(date);
+
+    final params = AddExpenseParams(
+      periodId: int.parse(periodId),
+      categoryId: int.parse(categoryId),
+      description: description,
+      amount: double.parse(amount),
+      date: date,
+    );
+
+    await sut.add();
+    verify(() => addExpense.add(params)).called(1);
   });
 }

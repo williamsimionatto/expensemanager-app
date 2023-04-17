@@ -35,6 +35,9 @@ class GetXAddExpensePresenter extends GetxController
   @override
   Stream<UIError?> get categoryErrorStream => _categoryError.stream;
 
+  @override
+  Stream<UIError?> get descriptionErrorStream => _descriptionError.stream;
+
   String? _periodId;
   String? _categoryId;
   String? _description;

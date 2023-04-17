@@ -199,5 +199,18 @@ void main() {
       verify(() => validation.validate(field: 'description', input: formDate))
           .called(1);
     });
+
+    test('Should emit invalidFieldError if description value is invalid',
+        () async {
+      validation.mockValidationError(error: ValidationError.invalidField);
+
+      sut.descriptionErrorStream?.listen(
+          expectAsync1((error) => expect(error, UIError.invalidField)));
+      sut.isFormValidStream
+          ?.listen(expectAsync1((isValid) => expect(isValid, false)));
+
+      sut.validateDescription(description);
+      sut.validateDescription(description);
+    });
   });
 }

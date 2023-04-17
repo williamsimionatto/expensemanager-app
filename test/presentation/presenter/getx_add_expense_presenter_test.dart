@@ -25,12 +25,14 @@ void main() {
   late String categoryId;
   late String description;
   late String amount;
+  late String date;
 
   setUp(() {
     periodId = faker.guid.guid();
     categoryId = faker.guid.guid();
     description = faker.lorem.sentence();
     amount = faker.randomGenerator.decimal().toString();
+    date = faker.date.dateTime().toIso8601String();
 
     loadPeriods = LoadPeriodsSpy();
     loadPeriodCategories = LoadPeriodCategoriesSpy();
@@ -98,6 +100,7 @@ void main() {
         'categoryId': null,
         'description': null,
         'amount': null,
+        'date': null,
       };
 
       sut.validatePeriod(periodId);
@@ -148,6 +151,7 @@ void main() {
         'categoryId': categoryId,
         'description': null,
         'amount': null,
+        'date': null,
       };
 
       sut.validateCategory(categoryId);
@@ -199,6 +203,7 @@ void main() {
         'categoryId': null,
         'description': description,
         'amount': null,
+        'date': null,
       };
 
       sut.validateDescription(description);
@@ -251,6 +256,7 @@ void main() {
         'categoryId': null,
         'description': null,
         'amount': amount,
+        'date': null,
       };
 
       sut.validateAmount(amount);
@@ -291,6 +297,56 @@ void main() {
 
       sut.validateAmount(amount);
       sut.validateAmount(amount);
+    });
+  });
+
+  group('Date', () {
+    test('Should call Validation with correct date', () {
+      final formDate = {
+        'periodId': null,
+        'categoryId': null,
+        'description': null,
+        'amount': null,
+        'date': date,
+      };
+
+      sut.validateDate(date);
+
+      verify(() => validation.validate(field: 'date', input: formDate))
+          .called(1);
+    });
+
+    test('Should emit invalidFieldError if date value is invalid', () async {
+      validation.mockValidationError(error: ValidationError.invalidField);
+
+      sut.dateErrorStream?.listen(
+          expectAsync1((error) => expect(error, UIError.invalidField)));
+      sut.isFormValidStream
+          ?.listen(expectAsync1((isValid) => expect(isValid, false)));
+
+      sut.validateDate(date);
+      sut.validateDate(date);
+    });
+
+    test('Should emit requiredFieldError if date value is empty', () async {
+      validation.mockValidationError(error: ValidationError.requiredField);
+
+      sut.dateErrorStream?.listen(
+          expectAsync1((error) => expect(error, UIError.requiredField)));
+      sut.isFormValidStream
+          ?.listen(expectAsync1((isValid) => expect(isValid, false)));
+
+      sut.validateDate(date);
+      sut.validateDate(date);
+    });
+
+    test('Should emit null if date validation succeeds', () {
+      sut.dateErrorStream?.listen(expectAsync1((error) => expect(error, null)));
+      sut.isFormValidStream
+          ?.listen(expectAsync1((isValid) => expect(isValid, false)));
+
+      sut.validateDate(date);
+      sut.validateDate(date);
     });
   });
 }

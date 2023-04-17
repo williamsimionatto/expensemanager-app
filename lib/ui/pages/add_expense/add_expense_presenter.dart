@@ -15,9 +15,11 @@ abstract class AddExpensePresenter {
   Stream<UIError?>? get categoryErrorStream;
   Stream<UIError?>? get descriptionErrorStream;
   Stream<UIError?>? get amountErrorStream;
+  Stream<UIError?>? get dateErrorStream;
 
   void validatePeriod(String periodId);
   void validateCategory(String categoryId);
   void validateDescription(String description);
   void validateAmount(String amount);
+  void validateDate(String date);
 }

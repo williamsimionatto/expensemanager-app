@@ -1,8 +1,9 @@
-import 'package:expensemanagerapp/ui/pages/pages.dart';
+import 'package:flutter/material.dart';
 
 import 'package:expensemanagerapp/ui/helpers/errors/errors.dart';
+import 'package:expensemanagerapp/ui/pages/pages.dart';
 
-abstract class AddExpensePresenter {
+abstract class AddExpensePresenter implements Listenable {
   Future<void> loadPeriods();
   Future<void> loadPeriodCategories(String periodId);
   Future<void> add();
@@ -27,4 +28,6 @@ abstract class AddExpensePresenter {
   void validateDescription(String description);
   void validateAmount(String amount);
   void validateDate(String date);
+
+  List<Map<String, dynamic>> getPeriods();
 }

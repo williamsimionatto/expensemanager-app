@@ -1,5 +1,5 @@
 import 'package:expensemanagerapp/domain/entities/entities.dart';
-import 'package:expensemanagerapp/domain/helpers/domain_error.dart';
+import 'package:expensemanagerapp/domain/helpers/helpers.dart';
 import 'package:expensemanagerapp/domain/usecases/usecases.dart';
 
 import 'package:expensemanagerapp/data/http/http.dart';

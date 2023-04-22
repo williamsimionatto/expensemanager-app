@@ -168,6 +168,16 @@ class GetXAddExpensePresenter extends GetxController
     _validateForm();
   }
 
+  @override
+  List<Map<String, dynamic>> getPeriods() {
+    return _periods.value
+        .map((period) => {
+              'id': period.id,
+              'name': period.name,
+            })
+        .toList();
+  }
+
   UIError? _validateField(String field) {
     final formData = {
       'periodId': _periodId,

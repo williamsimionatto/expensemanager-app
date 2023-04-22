@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import 'package:expensemanagerapp/ui/pages/pages.dart';
@@ -83,9 +84,29 @@ class UserItem extends StatelessWidget {
 
   const UserItem(this.viewModel, {Key? key}) : super(key: key);
 
+  String formatDate(date) {
+    final dateFormated = DateTime.parse(date);
+    return DateFormat('dd/mm/yyy').format(dateFormated);
+  }
+
+  void _showBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return const SizedBox(
+          height: 200,
+          child: Center(
+            child: Text('Conteúdo do BottomSheet'),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap: () => _showBottomSheet(context),
       child: Card(
         color: Colors.white,
         shape: RoundedRectangleBorder(
@@ -97,13 +118,15 @@ class UserItem extends StatelessWidget {
             viewModel.description,
             style: const TextStyle(
               color: Color(0XFFF64348),
-              // fontWeight: FontWeight.bold,
               fontSize: 16,
             ),
           ),
-          trailing: const Icon(
-            Icons.keyboard_arrow_right,
-            color: Color(0XFFF64348),
+          subtitle: Text(
+            '${formatDate(viewModel.date)} - R\$${viewModel.amount}',
+            style: const TextStyle(
+              color: Color(0XFF3F3F3F),
+              fontSize: 14,
+            ),
           ),
         ),
       ),

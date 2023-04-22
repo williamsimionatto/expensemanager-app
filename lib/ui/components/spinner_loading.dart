@@ -15,7 +15,7 @@ Future<void> showLoading(BuildContext context) async {
               ),
               const SizedBox(height: 10),
               const Text(
-                'Aguarde ... ',
+                'Waiting ... ',
                 textAlign: TextAlign.center,
               )
             ],

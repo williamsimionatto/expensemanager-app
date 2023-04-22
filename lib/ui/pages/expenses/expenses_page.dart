@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import 'package:expensemanagerapp/ui/components/components.dart';
 import 'package:expensemanagerapp/ui/pages/pages.dart';
 
 import '../../mixins/mixins.dart';
-import '../../components/components.dart';
+import './components/compoents.dart';
 
 class ExpensesPage extends StatefulWidget {
   final ExpensesPresenter presenter;
@@ -74,31 +74,21 @@ class ExpenseListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       padding: const EdgeInsets.all(8),
-      children: expenses.map((viewModel) => UserItem(viewModel)).toList(),
+      children: expenses.map((viewModel) => ExpenseItem(viewModel)).toList(),
     );
   }
 }
 
-class UserItem extends StatelessWidget {
+class ExpenseItem extends StatelessWidget {
   final ExpenseViewModel viewModel;
 
-  const UserItem(this.viewModel, {Key? key}) : super(key: key);
+  const ExpenseItem(this.viewModel, {Key? key}) : super(key: key);
 
-  String formatDate(date) {
-    final dateFormated = DateTime.parse(date);
-    return DateFormat('dd/mm/yyy').format(dateFormated);
-  }
-
-  void _showBottomSheet(BuildContext context) {
+  void _showBottomSheet(BuildContext context, ExpenseViewModel data) {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        return const SizedBox(
-          height: 200,
-          child: Center(
-            child: Text('Conteúdo do BottomSheet'),
-          ),
-        );
+        return BottomSheetModal(expense: data);
       },
     );
   }
@@ -106,7 +96,8 @@ class UserItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => _showBottomSheet(context),
+      onTap: () => _showBottomSheet(context, viewModel),
+      behavior: HitTestBehavior.opaque,
       child: Card(
         color: Colors.white,
         shape: RoundedRectangleBorder(
@@ -121,12 +112,9 @@ class UserItem extends StatelessWidget {
               fontSize: 16,
             ),
           ),
-          subtitle: Text(
-            '${formatDate(viewModel.date)} - R\$${viewModel.amount}',
-            style: const TextStyle(
-              color: Color(0XFF3F3F3F),
-              fontSize: 14,
-            ),
+          trailing: const Icon(
+            Icons.info_outlined,
+            color: Color(0XFFF64348),
           ),
         ),
       ),

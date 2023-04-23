@@ -58,6 +58,12 @@ class _ExpensesPage extends State<ExpensesPage> with LoadingManager {
           );
         },
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, '/add_expense');
+        },
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }

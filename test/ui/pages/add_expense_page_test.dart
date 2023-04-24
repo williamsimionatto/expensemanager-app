@@ -1,3 +1,4 @@
+import 'package:expensemanagerapp/ui/helpers/helpers.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
@@ -71,5 +72,25 @@ void main() {
     await tester.tap(find.text('OK'));
     await tester.pumpAndSettle();
     verify(() => presenter.validateDate(any()));
+  });
+
+  testWidgets('Should present description error', (WidgetTester tester) async {
+    await loadPage(tester);
+
+    presenter.emitDescriptionError(UIError.invalidField);
+    await tester.pumpAndSettle();
+    expect(find.text('Invalid Field'), findsOneWidget);
+
+    presenter.emitDescriptionError(UIError.requiredField);
+    await tester.pumpAndSettle();
+    expect(find.text('Required Field'), findsOneWidget);
+
+    presenter.emitDescriptionValid();
+    await tester.pump();
+
+    expect(
+      find.byKey(const ValueKey('descriptionInput')),
+      findsOneWidget,
+    );
   });
 }

@@ -4,11 +4,11 @@ extension UIErrorExtension on UIError {
   String get description {
     switch (this) {
       case UIError.requiredField:
-        return 'Campo obrigatório';
+        return 'Required Field';
       case UIError.invalidField:
-        return 'Campo inválido';
+        return 'Invalid Field';
       case UIError.unexpected:
-        return 'Algo errado aconteceu. Tente novamente em breve.';
+        return 'Something went wrong. Please try again soon.';
     }
   }
 }

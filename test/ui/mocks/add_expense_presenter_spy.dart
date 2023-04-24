@@ -27,6 +27,9 @@ class AddExpensePresenterSpy extends Mock implements AddExpensePresenter {
         .thenAnswer((_) => periodErrorController.stream);
     when(() => categoryErrorStream)
         .thenAnswer((_) => categoryErrorController.stream);
+
+    when(() => isFormValidStream)
+        .thenAnswer((_) => isFormValidController.stream);
   }
 
   void emitDescriptionError(UIError error) =>

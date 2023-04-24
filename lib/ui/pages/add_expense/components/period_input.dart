@@ -42,7 +42,6 @@ class _PeriodInputState extends State<PeriodInput> {
           onChanged: (val) {
             PeriodInput.selectedPeriod = val!;
             presenter.validatePeriod(val);
-            presenter.loadPeriodCategories(val);
           },
           items: presenter.getPeriods().map((profile) {
             return DropdownMenuItem<String>(

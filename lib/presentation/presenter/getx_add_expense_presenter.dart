@@ -137,6 +137,7 @@ class GetXAddExpensePresenter extends GetxController
   void validatePeriod(String periodId) {
     _periodId = periodId;
     _periodError.value = _validateField('periodId');
+    loadPeriodCategories(_periodId.toString());
     _validateForm();
   }
 

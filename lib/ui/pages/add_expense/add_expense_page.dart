@@ -40,7 +40,8 @@ class _AddExpensePage extends State<AddExpensePage> {
                           Padding(
                             padding: EdgeInsets.only(top: 8, bottom: 32),
                             child: CategoryInput(),
-                          )
+                          ),
+                          DescriptionInput(),
                         ],
                       ),
                     ),

@@ -151,4 +151,23 @@ void main() {
       findsOneWidget,
     );
   });
+
+  testWidgets('Should presenter category error', (widgetTester) async {
+    await loadPage(widgetTester);
+
+    presenter.emitCategoryError(UIError.invalidField);
+    await widgetTester.pumpAndSettle();
+    expect(find.text('Invalid Field'), findsOneWidget);
+
+    presenter.emitCategoryError(UIError.requiredField);
+    await widgetTester.pumpAndSettle();
+    expect(find.text('Required Field'), findsOneWidget);
+
+    presenter.emitCategoryValid();
+    await widgetTester.pumpAndSettle();
+    expect(
+      find.byKey(const ValueKey('categoryInput')),
+      findsOneWidget,
+    );
+  });
 }

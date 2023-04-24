@@ -207,4 +207,17 @@ void main() {
 
     verify(() => presenter.add()).called(1);
   });
+
+  testWidgets('Should present error message if add throws',
+      (WidgetTester tester) async {
+    await loadPage(tester);
+
+    presenter.emitMainError(UIError.unexpected);
+    await tester.pumpAndSettle();
+
+    expect(
+      find.text('Something went wrong. Please try again soon.'),
+      findsOneWidget,
+    );
+  });
 }

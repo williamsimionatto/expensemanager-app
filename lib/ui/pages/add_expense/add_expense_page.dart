@@ -1,4 +1,3 @@
-import 'package:expensemanagerapp/ui/pages/add_expense/components/date_input.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -7,7 +6,8 @@ import 'package:expensemanagerapp/ui/pages/pages.dart';
 
 import './components/components.dart';
 
-class AddExpensePage extends StatefulWidget with KeyboardManager {
+class AddExpensePage extends StatefulWidget
+    with KeyboardManager, UIErrorManager {
   final AddExpensePresenter presenter;
 
   const AddExpensePage(this.presenter, {Key? key}) : super(key: key);
@@ -24,6 +24,8 @@ class _AddExpensePage extends State<AddExpensePage> {
         title: const Text('Add Expense'),
       ),
       body: Builder(builder: (context) {
+        widget.handleMainError(context, widget.presenter.mainErrorStream);
+
         return GestureDetector(
           onTap: () => widget.hideKeyboard(context),
           child: SingleChildScrollView(

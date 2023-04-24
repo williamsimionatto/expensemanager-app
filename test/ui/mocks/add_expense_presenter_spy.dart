@@ -10,6 +10,7 @@ class AddExpensePresenterSpy extends Mock implements AddExpensePresenter {
   final dateErrorController = StreamController<UIError?>();
   final periodErrorController = StreamController<UIError?>();
   final categoryErrorController = StreamController<UIError?>();
+  final isFormValidController = StreamController<bool>();
 
   AddExpensePresenterSpy() {
     when(() => loadPeriods()).thenAnswer((_) async => _);
@@ -44,10 +45,14 @@ class AddExpensePresenterSpy extends Mock implements AddExpensePresenter {
   void emitCategoryError(UIError error) => categoryErrorController.add(error);
   void emitCategoryValid() => categoryErrorController.add(null);
 
+  void emitFormError() => isFormValidController.add(false);
+  void emitFormValid() => isFormValidController.add(true);
+
   void dispose() {
     descriptionErrorController.close();
     amountErrorController.close();
     dateErrorController.close();
     periodErrorController.close();
+    categoryErrorController.close();
   }
 }

@@ -174,4 +174,13 @@ void main() {
       findsOneWidget,
     );
   });
+
+  testWidgets('Should disabled button if form is invalid',
+      (WidgetTester tester) async {
+    await loadPage(tester);
+    presenter.emitFormError();
+
+    final button = tester.widget<ElevatedButton>(find.byType(ElevatedButton));
+    expect(button.onPressed, null);
+  });
 }

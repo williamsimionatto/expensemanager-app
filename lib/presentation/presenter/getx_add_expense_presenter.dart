@@ -179,6 +179,16 @@ class GetXAddExpensePresenter extends GetxController
         .toList();
   }
 
+  @override
+  List<Map<String, dynamic>> getCategories() {
+    return _periodCategories.value
+        .map((periodCategory) => {
+              'id': periodCategory.category.id,
+              'name': periodCategory.category.name,
+            })
+        .toList();
+  }
+
   UIError? _validateField(String field) {
     final formData = {
       'periodId': _periodId,

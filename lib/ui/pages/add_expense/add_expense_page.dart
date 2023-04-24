@@ -47,7 +47,11 @@ class _AddExpensePage extends State<AddExpensePage> {
                             padding: EdgeInsets.only(top: 8, bottom: 32),
                             child: AmountInput(),
                           ),
-                          DateInput()
+                          DateInput(),
+                          Padding(
+                            padding: EdgeInsets.only(top: 8, bottom: 32),
+                            child: AddExpenseButton(),
+                          ),
                         ],
                       ),
                     ),

@@ -48,6 +48,10 @@ void main() {
 
     final dateInput = find.byKey(const ValueKey('dateInput'));
     expect(dateInput, findsOneWidget);
+
+    final button = tester.widget<ElevatedButton>(find.byType(ElevatedButton));
+    expect(button.onPressed, null);
+    expect(find.byType(CircularProgressIndicator), findsNothing);
   });
 
   testWidgets('Should call Validate with correct values',

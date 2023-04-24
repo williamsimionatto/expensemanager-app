@@ -113,4 +113,23 @@ void main() {
       findsOneWidget,
     );
   });
+
+  testWidgets('Should present date error', (WidgetTester tester) async {
+    await loadPage(tester);
+
+    presenter.emitDateError(UIError.invalidField);
+    await tester.pumpAndSettle();
+    expect(find.text('Invalid Field'), findsOneWidget);
+
+    presenter.emitDateError(UIError.requiredField);
+    await tester.pumpAndSettle();
+    expect(find.text('Required Field'), findsOneWidget);
+
+    presenter.emitDateValid();
+    await tester.pumpAndSettle();
+    expect(
+      find.byKey(const ValueKey('dateInput')),
+      findsOneWidget,
+    );
+  });
 }

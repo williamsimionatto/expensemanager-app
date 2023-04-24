@@ -7,6 +7,7 @@ import 'package:expensemanagerapp/ui/pages/pages.dart';
 class AddExpensePresenterSpy extends Mock implements AddExpensePresenter {
   final descriptionErrorController = StreamController<UIError?>();
   final amountErrorController = StreamController<UIError?>();
+  final dateErrorController = StreamController<UIError?>();
 
   AddExpensePresenterSpy() {
     when(() => loadPeriods()).thenAnswer((_) async => _);
@@ -18,6 +19,7 @@ class AddExpensePresenterSpy extends Mock implements AddExpensePresenter {
         .thenAnswer((_) => descriptionErrorController.stream);
     when(() => amountErrorStream)
         .thenAnswer((_) => amountErrorController.stream);
+    when(() => dateErrorStream).thenAnswer((_) => dateErrorController.stream);
   }
 
   void emitDescriptionError(UIError error) =>
@@ -27,8 +29,12 @@ class AddExpensePresenterSpy extends Mock implements AddExpensePresenter {
   void emitAmountError(UIError error) => amountErrorController.add(error);
   void emitAmountValid() => amountErrorController.add(null);
 
+  void emitDateError(UIError error) => dateErrorController.add(error);
+  void emitDateValid() => dateErrorController.add(null);
+
   void dispose() {
     descriptionErrorController.close();
     amountErrorController.close();
+    dateErrorController.close();
   }
 }

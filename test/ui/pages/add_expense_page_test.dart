@@ -31,5 +31,10 @@ void main() {
 
     final periodDropdown = find.byKey(const ValueKey('periodInput'));
     expect(periodDropdown, findsOneWidget);
+
+    await tester.pump();
+
+    final categoryDropdown = find.byKey(const ValueKey('categoryInput'));
+    expect(categoryDropdown, findsOneWidget);
   });
 }

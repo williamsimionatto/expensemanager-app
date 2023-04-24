@@ -36,5 +36,8 @@ void main() {
 
     final categoryDropdown = find.byKey(const ValueKey('categoryInput'));
     expect(categoryDropdown, findsOneWidget);
+
+    final descriptionInput = find.byKey(const ValueKey('descriptionInput'));
+    expect(descriptionInput, findsOneWidget);
   });
 }

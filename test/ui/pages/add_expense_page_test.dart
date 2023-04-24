@@ -132,4 +132,23 @@ void main() {
       findsOneWidget,
     );
   });
+
+  testWidgets('Should presenter period error', (widgetTester) async {
+    await loadPage(widgetTester);
+
+    presenter.emitPeriodError(UIError.invalidField);
+    await widgetTester.pumpAndSettle();
+    expect(find.text('Invalid Field'), findsOneWidget);
+
+    presenter.emitPeriodError(UIError.requiredField);
+    await widgetTester.pumpAndSettle();
+    expect(find.text('Required Field'), findsOneWidget);
+
+    presenter.emitPeriodValid();
+    await widgetTester.pumpAndSettle();
+    expect(
+      find.byKey(const ValueKey('periodInput')),
+      findsOneWidget,
+    );
+  });
 }

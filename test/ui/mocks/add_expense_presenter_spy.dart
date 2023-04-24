@@ -8,6 +8,7 @@ class AddExpensePresenterSpy extends Mock implements AddExpensePresenter {
   final descriptionErrorController = StreamController<UIError?>();
   final amountErrorController = StreamController<UIError?>();
   final dateErrorController = StreamController<UIError?>();
+  final periodErrorController = StreamController<UIError?>();
 
   AddExpensePresenterSpy() {
     when(() => loadPeriods()).thenAnswer((_) async => _);
@@ -20,6 +21,8 @@ class AddExpensePresenterSpy extends Mock implements AddExpensePresenter {
     when(() => amountErrorStream)
         .thenAnswer((_) => amountErrorController.stream);
     when(() => dateErrorStream).thenAnswer((_) => dateErrorController.stream);
+    when(() => periodErrorStream)
+        .thenAnswer((_) => periodErrorController.stream);
   }
 
   void emitDescriptionError(UIError error) =>
@@ -31,6 +34,9 @@ class AddExpensePresenterSpy extends Mock implements AddExpensePresenter {
 
   void emitDateError(UIError error) => dateErrorController.add(error);
   void emitDateValid() => dateErrorController.add(null);
+
+  void emitPeriodError(UIError error) => periodErrorController.add(error);
+  void emitPeriodValid() => periodErrorController.add(null);
 
   void dispose() {
     descriptionErrorController.close();

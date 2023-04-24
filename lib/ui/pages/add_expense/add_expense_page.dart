@@ -1,3 +1,4 @@
+import 'package:expensemanagerapp/ui/pages/add_expense/components/date_input.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -45,7 +46,8 @@ class _AddExpensePage extends State<AddExpensePage> {
                           Padding(
                             padding: EdgeInsets.only(top: 8, bottom: 32),
                             child: AmountInput(),
-                          )
+                          ),
+                          DateInput()
                         ],
                       ),
                     ),

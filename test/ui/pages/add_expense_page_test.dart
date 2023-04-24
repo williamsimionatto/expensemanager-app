@@ -39,5 +39,11 @@ void main() {
 
     final descriptionInput = find.byKey(const ValueKey('descriptionInput'));
     expect(descriptionInput, findsOneWidget);
+
+    final amountInput = find.byKey(const ValueKey('amountInput'));
+    expect(amountInput, findsOneWidget);
+
+    final dateInput = find.byKey(const ValueKey('dateInput'));
+    expect(dateInput, findsOneWidget);
   });
 }

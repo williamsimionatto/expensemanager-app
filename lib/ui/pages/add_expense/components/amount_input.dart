@@ -18,6 +18,7 @@ class AmountInput extends StatelessWidget {
       stream: presenter.amountErrorStream,
       builder: (context, snapshot) {
         return TextFormField(
+          key: const ValueKey('amountInput'),
           inputFormatters: [
             FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
           ],

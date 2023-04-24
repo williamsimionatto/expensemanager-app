@@ -93,4 +93,24 @@ void main() {
       findsOneWidget,
     );
   });
+
+  testWidgets('Should present amount error', (WidgetTester tester) async {
+    await loadPage(tester);
+
+    presenter.emitAmountError(UIError.invalidField);
+    await tester.pumpAndSettle();
+    expect(find.text('Invalid Field'), findsOneWidget);
+
+    presenter.emitAmountError(UIError.requiredField);
+    await tester.pumpAndSettle();
+    expect(find.text('Required Field'), findsOneWidget);
+
+    presenter.emitAmountValid();
+    await tester.pump();
+
+    expect(
+      find.byKey(const ValueKey('amountInput')),
+      findsOneWidget,
+    );
+  });
 }

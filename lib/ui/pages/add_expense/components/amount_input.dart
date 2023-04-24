@@ -22,18 +22,19 @@ class AmountInput extends StatelessWidget {
           inputFormatters: [
             FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
           ],
-          decoration: const InputDecoration(
+          decoration: InputDecoration(
             labelText: 'Amount',
-            labelStyle: TextStyle(
+            labelStyle: const TextStyle(
               fontWeight: FontWeight.bold,
             ),
-            border: OutlineInputBorder(),
-            enabledBorder: OutlineInputBorder(
+            errorText: snapshot.data?.description,
+            border: const OutlineInputBorder(),
+            enabledBorder: const OutlineInputBorder(
               borderSide: BorderSide(
                 width: 1.0,
               ),
             ),
-            focusedBorder: OutlineInputBorder(
+            focusedBorder: const OutlineInputBorder(
               borderSide: BorderSide(
                 width: 1.5,
               ),

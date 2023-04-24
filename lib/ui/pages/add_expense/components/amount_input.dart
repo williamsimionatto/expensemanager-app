@@ -23,7 +23,7 @@ class AmountInput extends StatelessWidget {
             FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
           ],
           decoration: const InputDecoration(
-            labelText: 'Valor',
+            labelText: 'Amount',
             labelStyle: TextStyle(
               fontWeight: FontWeight.bold,
             ),

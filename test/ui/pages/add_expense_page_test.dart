@@ -220,4 +220,17 @@ void main() {
       findsOneWidget,
     );
   });
+
+  testWidgets('Should present success message if add succeeds',
+      (WidgetTester tester) async {
+    await loadPage(tester);
+
+    presenter.emitSuccess();
+    await tester.pumpAndSettle();
+
+    expect(
+      find.text('Expense added successfully'),
+      findsOneWidget,
+    );
+  });
 }

@@ -6,17 +6,12 @@ import 'package:expensemanagerapp/ui/pages/pages.dart';
 
 import './components/components.dart';
 
-class AddExpensePage extends StatefulWidget
-    with KeyboardManager, UIErrorManager {
+class AddExpensePage extends StatelessWidget
+    with KeyboardManager, UIErrorManager, SuccessManager {
   final AddExpensePresenter presenter;
 
-  const AddExpensePage(this.presenter, {Key? key}) : super(key: key);
+  AddExpensePage(this.presenter, {Key? key}) : super(key: key);
 
-  @override
-  State<AddExpensePage> createState() => _AddExpensePage();
-}
-
-class _AddExpensePage extends State<AddExpensePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,10 +19,11 @@ class _AddExpensePage extends State<AddExpensePage> {
         title: const Text('Add Expense'),
       ),
       body: Builder(builder: (context) {
-        widget.handleMainError(context, widget.presenter.mainErrorStream);
+        handleMainError(context, presenter.mainErrorStream);
+        handleSuccessMessage(context, presenter.successMessageStream);
 
         return GestureDetector(
-          onTap: () => widget.hideKeyboard(context),
+          onTap: () => hideKeyboard(context),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -35,7 +31,7 @@ class _AddExpensePage extends State<AddExpensePage> {
                 Padding(
                   padding: const EdgeInsets.all(32),
                   child: ListenableProvider(
-                    create: (_) => widget.presenter,
+                    create: (_) => presenter,
                     child: Form(
                       child: Column(
                         children: const <Widget>[

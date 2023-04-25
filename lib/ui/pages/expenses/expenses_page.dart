@@ -58,6 +58,12 @@ class _ExpensesPage extends State<ExpensesPage> with LoadingManager {
           );
         },
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, '/add_expense');
+        },
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }
@@ -87,6 +93,12 @@ class ExpenseItem extends StatelessWidget {
   void _showBottomSheet(BuildContext context, ExpenseViewModel data) {
     showModalBottomSheet(
       context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(32),
+        ),
+      ),
+      barrierColor: Colors.grey.withOpacity(0.5),
       builder: (BuildContext context) {
         return BottomSheetModal(expense: data);
       },

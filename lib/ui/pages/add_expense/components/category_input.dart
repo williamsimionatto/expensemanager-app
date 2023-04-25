@@ -5,27 +5,27 @@ import 'package:expensemanagerapp/ui/pages/pages.dart';
 
 import '../../../helpers/helpers.dart';
 
-class PeriodInput extends StatefulWidget {
-  static String selectedPeriod = '';
+class CategoryInput extends StatefulWidget {
+  static String selectedCategory = '';
 
-  const PeriodInput({Key? key}) : super(key: key);
+  const CategoryInput({Key? key}) : super(key: key);
 
   @override
-  State<PeriodInput> createState() => _PeriodInputState();
+  State<CategoryInput> createState() => _CategoryInputState();
 }
 
-class _PeriodInputState extends State<PeriodInput> {
+class _CategoryInputState extends State<CategoryInput> {
   @override
   Widget build(BuildContext context) {
     final presenter = Provider.of<AddExpensePresenter>(context);
 
     return StreamBuilder<UIError?>(
-      stream: presenter.periodErrorStream,
+      stream: presenter.categoryErrorStream,
       builder: (context, snapshot) {
         return DropdownButtonFormField<String>(
-          key: const Key('periodInput'),
+          key: const Key('categoryInput'),
           decoration: InputDecoration(
-            labelText: 'Period',
+            labelText: 'Category',
             labelStyle: const TextStyle(
               fontWeight: FontWeight.bold,
             ),
@@ -33,17 +33,17 @@ class _PeriodInputState extends State<PeriodInput> {
             border: const OutlineInputBorder(),
           ),
           isDense: true,
-          value: PeriodInput.selectedPeriod.isEmpty
+          value: CategoryInput.selectedCategory.isEmpty
               ? null
-              : PeriodInput.selectedPeriod,
+              : CategoryInput.selectedCategory,
           hint: const Text(
-            'Select a period',
+            'Select a category',
           ),
           onChanged: (val) {
-            PeriodInput.selectedPeriod = val!;
-            presenter.validatePeriod(val);
+            CategoryInput.selectedCategory = val!;
+            presenter.validateCategory(val);
           },
-          items: presenter.getPeriods().map((profile) {
+          items: presenter.getCategories().map((profile) {
             return DropdownMenuItem<String>(
               value: profile['id'].toString(),
               child: Text(profile['name']),

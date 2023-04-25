@@ -1,10 +1,10 @@
-import 'package:expensemanagerapp/domain/usecases/usecases.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 import 'package:expensemanagerapp/domain/entities/entities.dart';
 import 'package:expensemanagerapp/domain/helpers/helpers.dart';
+import 'package:expensemanagerapp/domain/usecases/usecases.dart';
 
 import 'package:expensemanagerapp/presentation/presenter/presenter.dart';
 import 'package:expensemanagerapp/presentation/protocols/validation.dart';
@@ -158,6 +158,11 @@ void main() {
 
       sut.validatePeriod(periodId);
       sut.validatePeriod(periodId);
+    });
+
+    test('Should call LoadPeriodCategories after a period is selected', () {
+      sut.validatePeriod(periodId);
+      verify(() => loadPeriodCategories.load(periodId)).called(1);
     });
   });
 

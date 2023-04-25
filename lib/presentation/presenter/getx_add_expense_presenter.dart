@@ -137,6 +137,7 @@ class GetXAddExpensePresenter extends GetxController
   void validatePeriod(String periodId) {
     _periodId = periodId;
     _periodError.value = _validateField('periodId');
+    loadPeriodCategories(_periodId.toString());
     _validateForm();
   }
 
@@ -174,6 +175,16 @@ class GetXAddExpensePresenter extends GetxController
         .map((period) => {
               'id': period.id,
               'name': period.name,
+            })
+        .toList();
+  }
+
+  @override
+  List<Map<String, dynamic>> getCategories() {
+    return _periodCategories.value
+        .map((periodCategory) => {
+              'id': periodCategory.category.id,
+              'name': periodCategory.category.name,
             })
         .toList();
   }

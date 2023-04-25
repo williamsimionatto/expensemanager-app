@@ -30,4 +30,5 @@ abstract class AddExpensePresenter implements Listenable {
   void validateDate(String date);
 
   List<Map<String, dynamic>> getPeriods();
+  List<Map<String, dynamic>> getCategories();
 }

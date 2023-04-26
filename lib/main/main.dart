@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:expensemanagerapp/main/factories/pages/expenses/expenses.dart';
+import 'package:expensemanagerapp/main/factories/pages/pages.dart';
 
 void main() {
   runApp(const App());
@@ -26,7 +26,12 @@ class App extends StatelessWidget {
         GetPage(
           name: '/expenses',
           page: makeExpensesPage,
-          transition: Transition.fade,
+          transition: Transition.zoom,
+        ),
+        GetPage(
+          name: '/expenses/add',
+          page: makeAddExpensePage,
+          transition: Transition.zoom,
         ),
       ],
     );

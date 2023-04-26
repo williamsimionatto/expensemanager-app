@@ -60,7 +60,7 @@ class _ExpensesPage extends State<ExpensesPage> with LoadingManager {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, '/add_expense');
+          Navigator.pushNamed(context, '/expenses/add');
         },
         child: const Icon(Icons.add),
       ),

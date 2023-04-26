@@ -51,6 +51,7 @@ class _CategoryInputState extends State<CategoryInput> {
           }).toList(),
           style: const TextStyle(
             fontSize: 16,
+            color: Colors.black,
           ),
         );
       },

@@ -51,6 +51,7 @@ class _PeriodInputState extends State<PeriodInput> {
           }).toList(),
           style: const TextStyle(
             fontSize: 16,
+            color: Colors.black,
           ),
         );
       },

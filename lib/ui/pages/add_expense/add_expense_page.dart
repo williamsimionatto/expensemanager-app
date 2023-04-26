@@ -23,42 +23,55 @@ class AddExpensePage extends StatelessWidget
         handleSuccessMessage(context, presenter.successMessageStream);
         handleLoading(context, presenter.isLoadingStream);
 
-        return GestureDetector(
-          onTap: () => hideKeyboard(context),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(32),
-                  child: ListenableProvider(
-                    create: (_) => presenter,
-                    child: Form(
-                      child: Column(
-                        children: const <Widget>[
-                          PeriodInput(),
-                          Padding(
-                            padding: EdgeInsets.only(top: 8, bottom: 32),
-                            child: CategoryInput(),
+        return FutureBuilder(
+          future: presenter.loadPeriods(),
+          builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(
+                  color: Theme.of(context).primaryColor,
+                ),
+              );
+            } else {
+              return GestureDetector(
+                onTap: () => hideKeyboard(context),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(32),
+                        child: ListenableProvider(
+                          create: (_) => presenter,
+                          child: Form(
+                            child: Column(
+                              children: const <Widget>[
+                                PeriodInput(),
+                                Padding(
+                                  padding: EdgeInsets.only(top: 8, bottom: 32),
+                                  child: CategoryInput(),
+                                ),
+                                DescriptionInput(),
+                                Padding(
+                                  padding: EdgeInsets.only(top: 8, bottom: 32),
+                                  child: AmountInput(),
+                                ),
+                                DateInput(),
+                                Padding(
+                                  padding: EdgeInsets.only(top: 8, bottom: 32),
+                                  child: AddExpenseButton(),
+                                ),
+                              ],
+                            ),
                           ),
-                          DescriptionInput(),
-                          Padding(
-                            padding: EdgeInsets.only(top: 8, bottom: 32),
-                            child: AmountInput(),
-                          ),
-                          DateInput(),
-                          Padding(
-                            padding: EdgeInsets.only(top: 8, bottom: 32),
-                            child: AddExpenseButton(),
-                          ),
-                        ],
-                      ),
-                    ),
+                        ),
+                      )
+                    ],
                   ),
-                )
-              ],
-            ),
-          ),
+                ),
+              );
+            }
+          },
         );
       }),
     );

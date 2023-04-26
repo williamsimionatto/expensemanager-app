@@ -31,7 +31,7 @@ class App extends StatelessWidget {
         GetPage(
           name: '/expenses/add',
           page: makeAddExpensePage,
-          transition: Transition.zoom,
+          transition: Transition.rightToLeftWithFade,
         ),
       ],
     );

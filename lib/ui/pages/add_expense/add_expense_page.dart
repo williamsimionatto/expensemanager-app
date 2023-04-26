@@ -48,17 +48,17 @@ class AddExpensePage extends StatelessWidget
                               children: const <Widget>[
                                 PeriodInput(),
                                 Padding(
-                                  padding: EdgeInsets.only(top: 8, bottom: 32),
+                                  padding: EdgeInsets.only(top: 16, bottom: 16),
                                   child: CategoryInput(),
                                 ),
                                 DescriptionInput(),
                                 Padding(
-                                  padding: EdgeInsets.only(top: 8, bottom: 32),
+                                  padding: EdgeInsets.only(top: 16, bottom: 16),
                                   child: AmountInput(),
                                 ),
                                 DateInput(),
                                 Padding(
-                                  padding: EdgeInsets.only(top: 8, bottom: 32),
+                                  padding: EdgeInsets.only(top: 16, bottom: 16),
                                   child: AddExpenseButton(),
                                 ),
                               ],

@@ -51,7 +51,9 @@ class HttpAdapter implements HttpClient {
   dynamic _handleResponse(Response response) {
     switch (response.statusCode) {
       case 200:
-        return response.body.isEmpty ? null : jsonDecode(response.body);
+        return response.body.isEmpty
+            ? null
+            : jsonDecode(utf8.decode(response.body.codeUnits));
       case 204:
         return null;
       case 400:

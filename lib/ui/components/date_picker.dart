@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 
-Future<DateTime?> datePicker(BuildContext context) async {
+Future<DateTime?> datePicker(
+  BuildContext context,
+  String startDate,
+  String endDate,
+) async {
+  final DateTime start = DateTime.parse(startDate);
+  final DateTime end = DateTime.parse(endDate);
+
   DateTime? date = await showDatePicker(
     context: context,
-    initialDate: DateTime.now(),
-    firstDate: DateTime(2010),
-    lastDate: DateTime(2050),
+    initialDate: start,
+    firstDate: start,
+    lastDate: end,
     builder: (context, child) {
       return Theme(
         data: ThemeData.light().copyWith(

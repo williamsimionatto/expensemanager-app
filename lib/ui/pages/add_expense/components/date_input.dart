@@ -28,7 +28,11 @@ class _StartDateInputState extends State<DateInput> {
     BuildContext context,
     AddExpensePresenter presenter,
   ) async {
-    DateTime? newDate = await datePicker(context);
+    DateTime? newDate = await datePicker(
+      context,
+      presenter.selectedPeriod!.startDate,
+      presenter.selectedPeriod!.endDate,
+    );
 
     if (newDate == null) return;
 

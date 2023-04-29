@@ -60,6 +60,9 @@ class GetXAddExpensePresenter extends GetxController
   String? _date;
 
   @override
+  late PeriodViewModel? selectedPeriod;
+
+  @override
   Stream<List<PeriodViewModel>> get periodsStream =>
       _periods.stream.map((periods) => periods.toList());
 
@@ -145,6 +148,10 @@ class GetXAddExpensePresenter extends GetxController
     _periodError.value = _validateField('periodId');
     loadPeriodCategories(_periodId.toString());
     _validateForm();
+
+    selectedPeriod = _periods.value.firstWhere(
+      (period) => period.id.toString() == periodId.toString(),
+    );
   }
 
   @override

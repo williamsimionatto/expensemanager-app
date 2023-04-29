@@ -35,4 +35,6 @@ abstract class AddExpensePresenter implements Listenable {
 
   String get periodId;
   bool get isPeriodValid;
+
+  PeriodViewModel? selectedPeriod;
 }

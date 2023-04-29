@@ -35,8 +35,8 @@ void main() {
         'description': params.description,
         'amount': params.amount,
         'date': params.date,
-        'category_id': params.categoryId,
-        'period_id': params.periodId,
+        'categoryId': params.categoryId,
+        'periodId': params.periodId,
       }),
     );
   });

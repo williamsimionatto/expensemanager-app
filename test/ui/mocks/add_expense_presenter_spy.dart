@@ -35,6 +35,8 @@ class AddExpensePresenterSpy extends Mock implements AddExpensePresenter {
     when(() => successMessageStream)
         .thenAnswer((_) => successMessageController.stream);
     when(() => add()).thenAnswer((_) async => _);
+
+    when(() => isPeriodValid).thenAnswer((_) => true);
   }
 
   void emitDescriptionError(UIError error) =>

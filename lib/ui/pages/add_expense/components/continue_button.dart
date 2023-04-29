@@ -14,6 +14,7 @@ class ContinueButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
+      key: const ValueKey('continueButton'),
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.resolveWith<Color>(
           (Set<MaterialState> states) {

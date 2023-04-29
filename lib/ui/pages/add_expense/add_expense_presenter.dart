@@ -22,6 +22,7 @@ abstract class AddExpensePresenter implements Listenable {
   Stream<UIError?>? get dateErrorStream;
 
   Stream<String?>? get successMessageStream;
+  Stream<String?>? get navigateToStream;
 
   void validatePeriod(String periodId);
   void validateCategory(String categoryId);

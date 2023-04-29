@@ -6,7 +6,12 @@ import 'package:expensemanagerapp/ui/pages/pages.dart';
 import './components/components.dart';
 
 class AddExpensePage extends StatelessWidget
-    with KeyboardManager, UIErrorManager, SuccessManager, LoadingManager {
+    with
+        KeyboardManager,
+        UIErrorManager,
+        SuccessManager,
+        LoadingManager,
+        NavigationManager {
   final AddExpensePresenter presenter;
 
   AddExpensePage(this.presenter, {Key? key}) : super(key: key);
@@ -32,6 +37,7 @@ class AddExpensePage extends StatelessWidget
             handleMainError(context, presenter.mainErrorStream);
             handleSuccessMessage(context, presenter.successMessageStream);
             handleLoading(context, presenter.isLoadingStream);
+            handleNavigation(presenter.navigateToStream, clear: true);
 
             return GestureDetector(
               onTap: () => hideKeyboard(context),

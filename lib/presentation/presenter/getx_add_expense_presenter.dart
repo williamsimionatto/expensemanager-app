@@ -10,7 +10,12 @@ import 'package:expensemanagerapp/ui/helpers/helpers.dart';
 import 'package:expensemanagerapp/ui/pages/pages.dart';
 
 class GetXAddExpensePresenter extends GetxController
-    with FormManager, LoadingManager, ErrorManager, SuccessManager
+    with
+        FormManager,
+        LoadingManager,
+        ErrorManager,
+        SuccessManager,
+        NavigationManager
     implements AddExpensePresenter {
   final Validation validation;
   final LoadPeriods loadPeriod;
@@ -127,6 +132,7 @@ class GetXAddExpensePresenter extends GetxController
 
       await addExpense.add(params);
       success = 'Expense added successfully';
+      navigateTo = '/expenses';
     } catch (error) {
       mainError = UIError.unexpected;
       isLoading = false;

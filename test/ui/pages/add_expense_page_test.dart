@@ -1,8 +1,10 @@
 import 'package:expensemanagerapp/ui/helpers/helpers.dart';
+import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
 
 import 'package:expensemanagerapp/ui/pages/pages.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../helpers/helpers.dart';
 import '../mocks/mocks.dart';
@@ -102,29 +104,30 @@ void main() {
     expect(find.byType(CircularProgressIndicator), findsNothing);
   });
 
-  // testWidgets('Should call Validate with correct values',
-  //     (WidgetTester tester) async {
-  //   await loadPage(tester);
-  //   await tester.pump();
+  testWidgets('Should call Validate with correct values',
+      (WidgetTester tester) async {
+    await loadPage(tester);
+    presenter.emitPeriodValid();
+    await tester.pumpAndSettle();
 
-  //   final description = faker.lorem.sentence();
-  //   await tester.enterText(
-  //     find.byKey(const ValueKey('descriptionInput')),
-  //     description,
-  //   );
-  //   verify(() => presenter.validateDescription(description));
+    final button = find.byType(ElevatedButton);
+    await tester.ensureVisible(button);
+    await tester.tap(button);
 
-  //   final amount =
-  //       faker.randomGenerator.decimal(min: 150).toStringAsFixed(2).toString();
-  //   await tester.enterText(find.byKey(const ValueKey('amountInput')), amount);
-  //   verify(() => presenter.validateAmount(amount));
+    await tester.pumpAndSettle();
 
-  //   await tester.tap(find.byKey(const ValueKey('dateInput')));
-  //   await tester.pumpAndSettle();
-  //   await tester.tap(find.text('OK'));
-  //   await tester.pumpAndSettle();
-  //   verify(() => presenter.validateDate(any()));
-  // });
+    final description = faker.lorem.sentence();
+    await tester.enterText(
+      find.byKey(const ValueKey('descriptionInput')),
+      description,
+    );
+    verify(() => presenter.validateDescription(description));
+
+    final amount =
+        faker.randomGenerator.decimal(min: 150).toStringAsFixed(2).toString();
+    await tester.enterText(find.byKey(const ValueKey('amountInput')), amount);
+    verify(() => presenter.validateAmount(amount));
+  });
 
   // testWidgets('Should present description error', (WidgetTester tester) async {
   //   await loadPage(tester);

@@ -279,18 +279,26 @@ void main() {
     expect(buttonSave.onPressed, isNotNull);
   });
 
-  // testWidgets('Should call add on form submit', (WidgetTester tester) async {
-  //   await loadPage(tester);
+  testWidgets('Should call add on form submit', (WidgetTester tester) async {
+    await loadPage(tester);
 
-  //   presenter.emitFormValid();
-  //   await tester.pumpAndSettle();
-  //   final button = find.byType(ElevatedButton);
-  //   await tester.ensureVisible(button);
-  //   await tester.tap(button);
-  //   await tester.pumpAndSettle();
+    presenter.emitPeriodValid();
+    await tester.pumpAndSettle();
 
-  //   verify(() => presenter.add()).called(1);
-  // });
+    final button = find.byType(ElevatedButton);
+    await tester.ensureVisible(button);
+    await tester.tap(button);
+    await tester.pumpAndSettle();
+
+    presenter.emitFormValid();
+    await tester.pumpAndSettle();
+    final buttonSave = find.byType(ElevatedButton);
+    await tester.ensureVisible(buttonSave);
+    await tester.tap(buttonSave);
+    await tester.pumpAndSettle();
+
+    verify(() => presenter.add()).called(1);
+  });
 
   testWidgets('Should present error message if add throws',
       (WidgetTester tester) async {

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'package:expensemanagerapp/ui/mixins/mixins.dart';
 import 'package:expensemanagerapp/ui/pages/pages.dart';
@@ -7,10 +6,19 @@ import 'package:expensemanagerapp/ui/pages/pages.dart';
 import './components/components.dart';
 
 class AddExpensePage extends StatelessWidget
-    with KeyboardManager, UIErrorManager, SuccessManager, LoadingManager {
+    with
+        KeyboardManager,
+        UIErrorManager,
+        SuccessManager,
+        LoadingManager,
+        NavigationManager {
   final AddExpensePresenter presenter;
 
   AddExpensePage(this.presenter, {Key? key}) : super(key: key);
+
+  final PageController controller = PageController(
+    initialPage: 0,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -18,62 +26,39 @@ class AddExpensePage extends StatelessWidget
       appBar: AppBar(
         title: const Text('Add Expense'),
       ),
-      body: Builder(builder: (context) {
-        handleMainError(context, presenter.mainErrorStream);
-        handleSuccessMessage(context, presenter.successMessageStream);
-        handleLoading(context, presenter.isLoadingStream);
+      body: FutureBuilder(
+        future: presenter.loadPeriods(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else {
+            handleMainError(context, presenter.mainErrorStream);
+            handleSuccessMessage(context, presenter.successMessageStream);
+            handleLoading(context, presenter.isLoadingStream);
+            handleNavigation(presenter.navigateToStream, clear: true);
 
-        return FutureBuilder(
-          future: presenter.loadPeriods(),
-          builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
-                child: CircularProgressIndicator(
-                  color: Theme.of(context).primaryColor,
-                ),
-              );
-            } else {
-              return GestureDetector(
-                onTap: () => hideKeyboard(context),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.all(32),
-                        child: ListenableProvider(
-                          create: (_) => presenter,
-                          child: Form(
-                            child: Column(
-                              children: const <Widget>[
-                                PeriodInput(),
-                                Padding(
-                                  padding: EdgeInsets.only(top: 16, bottom: 16),
-                                  child: CategoryInput(),
-                                ),
-                                DescriptionInput(),
-                                Padding(
-                                  padding: EdgeInsets.only(top: 16, bottom: 16),
-                                  child: AmountInput(),
-                                ),
-                                DateInput(),
-                                Padding(
-                                  padding: EdgeInsets.only(top: 16, bottom: 16),
-                                  child: AddExpenseButton(),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
+            return GestureDetector(
+              onTap: () => hideKeyboard(context),
+              child: PageView(
+                controller: controller,
+                physics: const NeverScrollableScrollPhysics(),
+                children: <Widget>[
+                  SelectPeriodPage(
+                    controller: controller,
+                    presenter: presenter,
                   ),
-                ),
-              );
-            }
-          },
-        );
-      }),
+                  Step2Page(
+                    controller: controller,
+                    presenter: presenter,
+                  ),
+                ],
+              ),
+            );
+          }
+        },
+      ),
     );
   }
 }

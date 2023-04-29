@@ -29,7 +29,7 @@ class RemoteAddExpenseModel {
         'description': description,
         'amount': amount,
         'date': date,
-        'category_id': categoryId,
-        'period_id': periodId,
+        'categoryId': categoryId,
+        'periodId': periodId,
       };
 }

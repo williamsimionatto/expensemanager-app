@@ -28,7 +28,7 @@ class AddExpenseButton extends StatelessWidget {
               },
             ),
             minimumSize: MaterialStateProperty.all<Size>(
-              const Size(double.maxFinite, 50),
+              const Size(50, 50),
             ),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(

@@ -10,7 +10,12 @@ import 'package:expensemanagerapp/ui/helpers/helpers.dart';
 import 'package:expensemanagerapp/ui/pages/pages.dart';
 
 class GetXAddExpensePresenter extends GetxController
-    with FormManager, LoadingManager, ErrorManager, SuccessManager
+    with
+        FormManager,
+        LoadingManager,
+        ErrorManager,
+        SuccessManager,
+        NavigationManager
     implements AddExpensePresenter {
   final Validation validation;
   final LoadPeriods loadPeriod;
@@ -53,6 +58,9 @@ class GetXAddExpensePresenter extends GetxController
   String? _description;
   String? _amount;
   String? _date;
+
+  @override
+  late PeriodViewModel? selectedPeriod;
 
   @override
   Stream<List<PeriodViewModel>> get periodsStream =>
@@ -127,6 +135,7 @@ class GetXAddExpensePresenter extends GetxController
 
       await addExpense.add(params);
       success = 'Expense added successfully';
+      navigateTo = '/expenses';
     } catch (error) {
       mainError = UIError.unexpected;
       isLoading = false;
@@ -139,6 +148,10 @@ class GetXAddExpensePresenter extends GetxController
     _periodError.value = _validateField('periodId');
     loadPeriodCategories(_periodId.toString());
     _validateForm();
+
+    selectedPeriod = _periods.value.firstWhere(
+      (period) => period.id.toString() == periodId.toString(),
+    );
   }
 
   @override
@@ -188,6 +201,12 @@ class GetXAddExpensePresenter extends GetxController
             })
         .toList();
   }
+
+  @override
+  bool get isPeriodValid => _periodError.value == null && _periodId != null;
+
+  @override
+  String get periodId => _periodId!;
 
   UIError? _validateField(String field) {
     final formData = {

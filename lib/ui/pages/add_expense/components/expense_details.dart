@@ -3,8 +3,8 @@ import 'package:expensemanagerapp/ui/pages/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class Step2Page extends StatelessWidget {
-  const Step2Page({
+class ExpenseDetails extends StatelessWidget {
+  const ExpenseDetails({
     super.key,
     required this.controller,
     required this.presenter,
@@ -27,8 +27,15 @@ class Step2Page extends StatelessWidget {
                   child: Form(
                     child: Column(
                       children: <Widget>[
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.1,
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            'Period: ${presenter.selectedPeriod?.name}',
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
                         const Padding(
                           padding: EdgeInsets.all(8.0),

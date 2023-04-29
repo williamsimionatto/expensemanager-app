@@ -49,7 +49,7 @@ class AddExpensePage extends StatelessWidget
                     controller: controller,
                     presenter: presenter,
                   ),
-                  Step2Page(
+                  ExpenseDetails(
                     controller: controller,
                     presenter: presenter,
                   ),

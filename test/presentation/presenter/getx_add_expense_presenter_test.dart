@@ -12,7 +12,7 @@ import 'package:expensemanagerapp/presentation/protocols/validation.dart';
 import 'package:expensemanagerapp/ui/helpers/helpers.dart';
 import 'package:expensemanagerapp/ui/pages/pages.dart';
 
-import '../../data/mocks/params_factory.dart';
+import '../../data/mocks/mocks.dart';
 import '../../domain/mocks/mocks.dart';
 import '../mocks/mocks.dart';
 
@@ -111,6 +111,10 @@ void main() {
   });
 
   group('Period', () {
+    setUp(() async {
+      await sut.loadPeriods();
+    });
+
     test('Shoul call Validation with correct period id', () {
       final formDate = {
         'periodId': periodId,
@@ -127,6 +131,7 @@ void main() {
     });
 
     test('Should emit invalidFieldError if period value is invalid', () async {
+      await sut.loadPeriods();
       validation.mockValidationError(error: ValidationError.invalidField);
 
       sut.periodErrorStream?.listen(
@@ -373,6 +378,7 @@ void main() {
   });
 
   test('Should emit form valid if all fields are valid', () async {
+    await sut.loadPeriods();
     expect(sut.isFormValidStream, emitsInOrder([false, true]));
 
     sut.validatePeriod(periodId);
@@ -383,6 +389,7 @@ void main() {
   });
 
   test('Should call AddExpense with correct values', () async {
+    await sut.loadPeriods();
     sut.validatePeriod(periodId);
     sut.validateCategory(categoryId);
     sut.validateDescription(description);
@@ -402,6 +409,7 @@ void main() {
   });
 
   test('Should emit correct events on AddExpense success', () async {
+    await sut.loadPeriods();
     sut.validatePeriod(periodId);
     sut.validateCategory(categoryId);
     sut.validateDescription(description);
@@ -418,6 +426,7 @@ void main() {
   });
 
   test('Should emit correct events on UnexpectedError', () async {
+    await sut.loadPeriods();
     addExpense.mockError(DomainError.unexpected);
 
     sut.validatePeriod(periodId);

@@ -151,13 +151,6 @@ class GetXAddExpensePresenter extends GetxController
 
     selectedPeriod = _periods.value.firstWhere(
       (period) => period.id.toString() == periodId.toString(),
-      orElse: () => const PeriodViewModel(
-        id: 0,
-        name: '',
-        startDate: '',
-        endDate: '',
-        budget: 0,
-      ),
     );
   }
 

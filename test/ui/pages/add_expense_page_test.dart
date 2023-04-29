@@ -129,83 +129,116 @@ void main() {
     verify(() => presenter.validateAmount(amount));
   });
 
-  // testWidgets('Should present description error', (WidgetTester tester) async {
-  //   await loadPage(tester);
+  testWidgets('Should present description error', (WidgetTester tester) async {
+    await loadPage(tester);
+    presenter.emitPeriodValid();
+    await tester.pumpAndSettle();
 
-  //   presenter.emitDescriptionError(UIError.invalidField);
-  //   await tester.pumpAndSettle();
-  //   expect(find.text('Invalid Field'), findsOneWidget);
+    final button = find.byType(ElevatedButton);
+    await tester.ensureVisible(button);
+    await tester.tap(button);
 
-  //   presenter.emitDescriptionError(UIError.requiredField);
-  //   await tester.pumpAndSettle();
-  //   expect(find.text('Required Field'), findsOneWidget);
+    await tester.pumpAndSettle();
 
-  //   presenter.emitDescriptionValid();
-  //   await tester.pump();
+    presenter.emitDescriptionError(UIError.invalidField);
+    await tester.pumpAndSettle();
+    expect(find.text('Invalid Field'), findsOneWidget);
 
-  //   expect(
-  //     find.byKey(const ValueKey('descriptionInput')),
-  //     findsOneWidget,
-  //   );
-  // });
+    presenter.emitDescriptionError(UIError.requiredField);
+    await tester.pumpAndSettle();
+    expect(find.text('Required Field'), findsOneWidget);
 
-  // testWidgets('Should present amount error', (WidgetTester tester) async {
-  //   await loadPage(tester);
+    presenter.emitDescriptionValid();
+    await tester.pump();
 
-  //   presenter.emitAmountError(UIError.invalidField);
-  //   await tester.pumpAndSettle();
-  //   expect(find.text('Invalid Field'), findsOneWidget);
+    expect(
+      find.byKey(const ValueKey('descriptionInput')),
+      findsOneWidget,
+    );
+  });
 
-  //   presenter.emitAmountError(UIError.requiredField);
-  //   await tester.pumpAndSettle();
-  //   expect(find.text('Required Field'), findsOneWidget);
+  testWidgets('Should present amount error', (WidgetTester tester) async {
+    await loadPage(tester);
 
-  //   presenter.emitAmountValid();
-  //   await tester.pump();
+    presenter.emitPeriodValid();
+    await tester.pumpAndSettle();
 
-  //   expect(
-  //     find.byKey(const ValueKey('amountInput')),
-  //     findsOneWidget,
-  //   );
-  // });
+    final button = find.byType(ElevatedButton);
+    await tester.ensureVisible(button);
+    await tester.tap(button);
 
-  // testWidgets('Should present date error', (WidgetTester tester) async {
-  //   await loadPage(tester);
+    await tester.pumpAndSettle();
 
-  //   presenter.emitDateError(UIError.invalidField);
-  //   await tester.pumpAndSettle();
-  //   expect(find.text('Invalid Field'), findsOneWidget);
+    presenter.emitAmountError(UIError.invalidField);
+    await tester.pumpAndSettle();
+    expect(find.text('Invalid Field'), findsOneWidget);
 
-  //   presenter.emitDateError(UIError.requiredField);
-  //   await tester.pumpAndSettle();
-  //   expect(find.text('Required Field'), findsOneWidget);
+    presenter.emitAmountError(UIError.requiredField);
+    await tester.pumpAndSettle();
+    expect(find.text('Required Field'), findsOneWidget);
 
-  //   presenter.emitDateValid();
-  //   await tester.pumpAndSettle();
-  //   expect(
-  //     find.byKey(const ValueKey('dateInput')),
-  //     findsOneWidget,
-  //   );
-  // });
+    presenter.emitAmountValid();
+    await tester.pump();
 
-  // testWidgets('Should presenter category error', (widgetTester) async {
-  //   await loadPage(widgetTester);
+    expect(
+      find.byKey(const ValueKey('amountInput')),
+      findsOneWidget,
+    );
+  });
 
-  //   presenter.emitCategoryError(UIError.invalidField);
-  //   await widgetTester.pumpAndSettle();
-  //   expect(find.text('Invalid Field'), findsOneWidget);
+  testWidgets('Should present date error', (WidgetTester tester) async {
+    await loadPage(tester);
+    presenter.emitPeriodValid();
+    await tester.pumpAndSettle();
 
-  //   presenter.emitCategoryError(UIError.requiredField);
-  //   await widgetTester.pumpAndSettle();
-  //   expect(find.text('Required Field'), findsOneWidget);
+    final button = find.byType(ElevatedButton);
+    await tester.ensureVisible(button);
+    await tester.tap(button);
 
-  //   presenter.emitCategoryValid();
-  //   await widgetTester.pumpAndSettle();
-  //   expect(
-  //     find.byKey(const ValueKey('categoryInput')),
-  //     findsOneWidget,
-  //   );
-  // });
+    await tester.pumpAndSettle();
+
+    presenter.emitDateError(UIError.invalidField);
+    await tester.pumpAndSettle();
+    expect(find.text('Invalid Field'), findsOneWidget);
+
+    presenter.emitDateError(UIError.requiredField);
+    await tester.pumpAndSettle();
+    expect(find.text('Required Field'), findsOneWidget);
+
+    presenter.emitDateValid();
+    await tester.pumpAndSettle();
+    expect(
+      find.byKey(const ValueKey('dateInput')),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('Should presenter category error', (widgetTester) async {
+    await loadPage(widgetTester);
+    presenter.emitPeriodValid();
+    await widgetTester.pumpAndSettle();
+
+    final button = find.byType(ElevatedButton);
+    await widgetTester.ensureVisible(button);
+    await widgetTester.tap(button);
+
+    await widgetTester.pumpAndSettle();
+
+    presenter.emitCategoryError(UIError.invalidField);
+    await widgetTester.pumpAndSettle();
+    expect(find.text('Invalid Field'), findsOneWidget);
+
+    presenter.emitCategoryError(UIError.requiredField);
+    await widgetTester.pumpAndSettle();
+    expect(find.text('Required Field'), findsOneWidget);
+
+    presenter.emitCategoryValid();
+    await widgetTester.pumpAndSettle();
+    expect(
+      find.byKey(const ValueKey('categoryInput')),
+      findsOneWidget,
+    );
+  });
 
   // testWidgets('Should disabled button if form is invalid',
   //     (WidgetTester tester) async {

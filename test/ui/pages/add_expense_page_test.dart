@@ -50,7 +50,8 @@ void main() {
     expect(button.onPressed, isNotNull);
   });
 
-  testWidgets('Should presenter period error', (widgetTester) async {
+  testWidgets('Should presenter period error',
+      (WidgetTester widgetTester) async {
     await loadPage(widgetTester);
 
     presenter.emitPeriodError(UIError.invalidField);
@@ -67,6 +68,38 @@ void main() {
       find.byKey(const ValueKey('periodInput')),
       findsOneWidget,
     );
+  });
+
+  testWidgets('Should change to second page',
+      (WidgetTester widgetTester) async {
+    await loadPage(widgetTester);
+
+    presenter.emitPeriodValid();
+    await widgetTester.pumpAndSettle();
+
+    final button = find.byType(ElevatedButton);
+    await widgetTester.ensureVisible(button);
+    await widgetTester.tap(button);
+
+    await widgetTester.pumpAndSettle();
+
+    final categoryDropdown = find.byKey(const ValueKey('categoryInput'));
+    expect(categoryDropdown, findsOneWidget);
+
+    final descriptionInput = find.byKey(const ValueKey('descriptionInput'));
+    expect(descriptionInput, findsOneWidget);
+
+    final amountInput = find.byKey(const ValueKey('amountInput'));
+    expect(amountInput, findsOneWidget);
+
+    final dateInput = find.byKey(const ValueKey('dateInput'));
+    expect(dateInput, findsOneWidget);
+
+    final saveButton =
+        widgetTester.widget<ElevatedButton>(find.byType(ElevatedButton));
+    expect(saveButton.onPressed, null);
+
+    expect(find.byType(CircularProgressIndicator), findsNothing);
   });
 
   // testWidgets('Should call Validate with correct values',

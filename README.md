@@ -1,19 +1,12 @@
 # expensemanagerapp
 
-## Problema
+## Problem
+Currently, many people lack financial control and organization, struggling to keep track of their income and expenses which can result in unnecessary spending and debt.
 
-Atualmente muitas pessoas têm falta de controle financeiro e de organização de suas finanças
-pessoais, devido alguma dificuldade em acompanhar suas receitas e despesas, podendo
-resultar em gastos desnecessários e endividamento.
+## Objective
+The Expense Manager software aims to help users have a clear and organized view of their finances, enabling them to make more informed decisions and be more successful in managing their money.
 
-## Objetivo
-Este Software de Gestão de Despesas tem como objetivo ajudar os usuários a ter uma visão
-clara e organizada de suas finanças, permitindo que eles tomem decisões mais conscientes e
-sejam mais bem-sucedidos no gerenciamento de seu dinheiro.
-
-## Público alvo
-O Expense Manager é destinado a pessoas que desejam gerenciar suas despesas pessoais e
-de negócios de forma eficiente e fácil.
-
+## Target audience
+Expense Manager is intended for individuals who want to efficiently and easily manage their personal and business expenses.
 #
-> Trabalho final da disciplina Desenvolvimento Web e Mobile - UPF 2023/1
+> Final project for the Web and Mobile Development course - UPF 2023/1

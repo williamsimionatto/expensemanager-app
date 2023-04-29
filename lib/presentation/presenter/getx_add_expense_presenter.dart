@@ -189,6 +189,9 @@ class GetXAddExpensePresenter extends GetxController
         .toList();
   }
 
+  @override
+  bool get isPeriodValid => _periodError.value == null && _periodId != null;
+
   UIError? _validateField(String field) {
     final formData = {
       'periodId': _periodId,

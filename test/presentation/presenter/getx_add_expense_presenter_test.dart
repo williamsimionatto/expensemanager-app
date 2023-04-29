@@ -40,7 +40,6 @@ void main() {
   });
 
   setUp(() {
-    periodId = faker.randomGenerator.integer(10).toString();
     categoryId = faker.randomGenerator.integer(10).toString();
     description = faker.lorem.sentence();
     amount = faker.randomGenerator.decimal().toString();
@@ -52,6 +51,7 @@ void main() {
 
     periods = EntityFactory.makePeriods();
     loadPeriods.mockLoadPeriods(periods);
+    periodId = periods.first.id.toString();
 
     periodCategories = EntityFactory.makePeriodCategories();
     loadPeriodCategories.mockLoadPeriodCategories(periodCategories);

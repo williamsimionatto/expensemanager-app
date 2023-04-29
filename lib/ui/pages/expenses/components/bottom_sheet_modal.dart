@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import 'package:expensemanagerapp/ui/pages/pages.dart';
+import './delete_confirmation_dialog.dart';
 
 class BottomSheetModal extends StatelessWidget {
   final ExpenseViewModel expense;
+  final ExpensesPresenter presenter;
 
   const BottomSheetModal({
     Key? key,
     required this.expense,
+    required this.presenter,
   }) : super(key: key);
 
   String formatDate(date) {
@@ -108,7 +111,21 @@ class BottomSheetModal extends StatelessWidget {
                 color: const Color(0XFFF64348),
               ),
               child: TextButton.icon(
-                onPressed: () {},
+                onPressed: () async {
+                  final navigator = Navigator.of(context);
+
+                  final confirmation = await showDialog<bool>(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return const DeleteConfirmationDialog();
+                    },
+                  );
+
+                  if (confirmation != null && confirmation) {
+                    await presenter.deleteExpense(expense.id.toString());
+                    navigator.pop();
+                  }
+                },
                 icon: const Icon(Icons.delete, color: Colors.white),
                 label: const Text(
                   'Delete',

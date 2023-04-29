@@ -16,7 +16,8 @@ class ExpensesPage extends StatefulWidget {
   State<ExpensesPage> createState() => _ExpensesPage();
 }
 
-class _ExpensesPage extends State<ExpensesPage> with LoadingManager {
+class _ExpensesPage extends State<ExpensesPage>
+    with LoadingManager, SuccessManager {
   @override
   Widget build(BuildContext context) {
     Future.delayed(Duration.zero, () {
@@ -29,6 +30,7 @@ class _ExpensesPage extends State<ExpensesPage> with LoadingManager {
       ),
       body: Builder(
         builder: (context) {
+          handleSuccessMessage(context, widget.presenter.successMessageStream);
           widget.presenter.loadData();
 
           return StreamBuilder<List<ExpenseViewModel>?>(
@@ -46,7 +48,10 @@ class _ExpensesPage extends State<ExpensesPage> with LoadingManager {
                   onRefresh: () => widget.presenter.loadData(),
                   child: ListenableProvider<ExpensesPresenter>(
                     create: (_) => widget.presenter,
-                    child: ExpenseListView(expenses: snapshot.data!),
+                    child: ExpenseListView(
+                      expenses: snapshot.data!,
+                      presenter: widget.presenter,
+                    ),
                   ),
                 );
               }
@@ -70,25 +75,29 @@ class _ExpensesPage extends State<ExpensesPage> with LoadingManager {
 
 class ExpenseListView extends StatelessWidget {
   final List<ExpenseViewModel> expenses;
+  final ExpensesPresenter presenter;
 
-  const ExpenseListView({
-    Key? key,
-    required this.expenses,
-  }) : super(key: key);
+  const ExpenseListView(
+      {Key? key, required this.expenses, required this.presenter})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListView(
       padding: const EdgeInsets.all(8),
-      children: expenses.map((viewModel) => ExpenseItem(viewModel)).toList(),
+      children: expenses
+          .map((viewModel) => ExpenseItem(viewModel, presenter))
+          .toList(),
     );
   }
 }
 
 class ExpenseItem extends StatelessWidget {
   final ExpenseViewModel viewModel;
+  final ExpensesPresenter presenter;
 
-  const ExpenseItem(this.viewModel, {Key? key}) : super(key: key);
+  const ExpenseItem(this.viewModel, this.presenter, {Key? key})
+      : super(key: key);
 
   void _showBottomSheet(BuildContext context, ExpenseViewModel data) {
     showModalBottomSheet(
@@ -100,7 +109,7 @@ class ExpenseItem extends StatelessWidget {
       ),
       barrierColor: Colors.grey.withOpacity(0.5),
       builder: (BuildContext context) {
-        return BottomSheetModal(expense: data);
+        return BottomSheetModal(expense: data, presenter: presenter);
       },
     );
   }

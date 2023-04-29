@@ -11,6 +11,7 @@ import '../../domain/mocks/mocks.dart';
 
 void main() {
   late LoadExpensesSpy loadExpenses;
+  late DeleteExpenseSpy deleteExpense;
   late GetxExpensesPresenter sut;
   late List<ExpenseEntity> expenses;
 
@@ -18,7 +19,12 @@ void main() {
     expenses = EntityFactory.makeExpenses();
     loadExpenses = LoadExpensesSpy();
     loadExpenses.mockLoad(expenses);
-    sut = GetxExpensesPresenter(loadExpenses: loadExpenses);
+
+    deleteExpense = DeleteExpenseSpy();
+    deleteExpense.mockDelete('1');
+
+    sut = GetxExpensesPresenter(
+        loadExpenses: loadExpenses, deleteExpenses: deleteExpense);
   });
 
   test('Shoudl call LoadExpenses on loadData', () async {

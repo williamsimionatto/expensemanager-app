@@ -8,9 +8,10 @@ import 'package:expensemanagerapp/presentation/mixins/mixins.dart';
 import 'package:expensemanagerapp/ui/pages/pages.dart';
 
 class GetxExpensesPresenter extends GetxController
-    with LoadingManager, NavigationManager
+    with LoadingManager, NavigationManager, SuccessManager
     implements ExpensesPresenter {
   final LoadExpenses loadExpenses;
+  final DeleteExpense deleteExpenses;
 
   final _expenses = Rx<List<ExpenseViewModel>>([]);
 
@@ -18,7 +19,10 @@ class GetxExpensesPresenter extends GetxController
   Stream<List<ExpenseViewModel>> get expensesStream =>
       _expenses.stream.map((expenses) => expenses.toList());
 
-  GetxExpensesPresenter({required this.loadExpenses});
+  GetxExpensesPresenter({
+    required this.loadExpenses,
+    required this.deleteExpenses,
+  });
 
   @override
   Future<void> loadData() async {
@@ -42,6 +46,22 @@ class GetxExpensesPresenter extends GetxController
       );
     } finally {
       isLoading = false;
+    }
+  }
+
+  @override
+  Future<void> deleteExpense(String id) async {
+    try {
+      isLoading = true;
+      await deleteExpenses.delete(id: id);
+      success = 'Expense deleted successfully';
+    } catch (error) {
+      _expenses.subject.addError(
+        DomainError.unexpected.description,
+        StackTrace.empty,
+      );
+    } finally {
+      loadData();
     }
   }
 }

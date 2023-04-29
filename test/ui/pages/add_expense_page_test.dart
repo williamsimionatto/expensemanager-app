@@ -240,25 +240,44 @@ void main() {
     );
   });
 
-  // testWidgets('Should disabled button if form is invalid',
-  //     (WidgetTester tester) async {
-  //   await loadPage(tester);
-  //   presenter.emitFormError();
+  testWidgets('Should disabled button if form is invalid',
+      (WidgetTester tester) async {
+    await loadPage(tester);
+    presenter.emitPeriodValid();
+    await tester.pumpAndSettle();
 
-  //   final button = tester.widget<ElevatedButton>(find.byType(ElevatedButton));
-  //   expect(button.onPressed, null);
-  // });
+    final button = find.byType(ElevatedButton);
+    await tester.ensureVisible(button);
+    await tester.tap(button);
 
-  // testWidgets('Should enabled button if form is valid',
-  //     (WidgetTester tester) async {
-  //   await loadPage(tester);
+    await tester.pumpAndSettle();
 
-  //   presenter.emitFormValid();
-  //   await tester.pumpAndSettle();
+    presenter.emitFormError();
 
-  //   final button = tester.widget<ElevatedButton>(find.byType(ElevatedButton));
-  //   expect(button.onPressed, isNotNull);
-  // });
+    final buttonSave =
+        tester.widget<ElevatedButton>(find.byType(ElevatedButton));
+    expect(buttonSave.onPressed, null);
+  });
+
+  testWidgets('Should enabled button if form is valid',
+      (WidgetTester tester) async {
+    await loadPage(tester);
+
+    presenter.emitPeriodValid();
+    await tester.pumpAndSettle();
+
+    final button = find.byType(ElevatedButton);
+    await tester.ensureVisible(button);
+    await tester.tap(button);
+    await tester.pumpAndSettle();
+
+    presenter.emitFormValid();
+    await tester.pumpAndSettle();
+
+    final buttonSave =
+        tester.widget<ElevatedButton>(find.byType(ElevatedButton));
+    expect(buttonSave.onPressed, isNotNull);
+  });
 
   // testWidgets('Should call add on form submit', (WidgetTester tester) async {
   //   await loadPage(tester);

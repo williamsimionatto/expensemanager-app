@@ -1,4 +1,3 @@
-
 import 'package:expensemanagerapp/ui/pages/pages.dart';
 import 'package:flutter/material.dart';
 
@@ -37,7 +36,9 @@ class ContinueButton extends StatelessWidget {
         ),
       ),
       onPressed: presenter.isPeriodValid
-          ? () {
+          ? () async {
+              await presenter.loadPeriodCategories(presenter.periodId);
+
               controller.animateToPage(
                 1,
                 duration: const Duration(milliseconds: 400),

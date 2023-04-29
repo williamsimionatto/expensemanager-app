@@ -32,5 +32,6 @@ abstract class AddExpensePresenter implements Listenable {
   List<Map<String, dynamic>> getPeriods();
   List<Map<String, dynamic>> getCategories();
 
+  String get periodId;
   bool get isPeriodValid;
 }

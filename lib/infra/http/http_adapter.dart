@@ -36,6 +36,8 @@ class HttpAdapter implements HttpClient {
           headers: defaultHeaders,
           body: jsonBody,
         );
+      } else if (method == 'delete') {
+        futureResponse = client.delete(uri, headers: defaultHeaders);
       }
 
       if (futureResponse != null) {

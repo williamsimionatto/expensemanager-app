@@ -1,10 +1,8 @@
 import 'package:expensemanagerapp/ui/helpers/helpers.dart';
-import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
 
 import 'package:expensemanagerapp/ui/pages/pages.dart';
-import 'package:mocktail/mocktail.dart';
 
 import '../helpers/helpers.dart';
 import '../mocks/mocks.dart';
@@ -50,6 +48,25 @@ void main() {
     final button =
         widgetTester.widget<ElevatedButton>(find.byType(ElevatedButton));
     expect(button.onPressed, isNotNull);
+  });
+
+  testWidgets('Should presenter period error', (widgetTester) async {
+    await loadPage(widgetTester);
+
+    presenter.emitPeriodError(UIError.invalidField);
+    await widgetTester.pumpAndSettle();
+    expect(find.text('Invalid Field'), findsOneWidget);
+
+    presenter.emitPeriodError(UIError.requiredField);
+    await widgetTester.pumpAndSettle();
+    expect(find.text('Required Field'), findsOneWidget);
+
+    presenter.emitPeriodValid();
+    await widgetTester.pumpAndSettle();
+    expect(
+      find.byKey(const ValueKey('periodInput')),
+      findsOneWidget,
+    );
   });
 
   // testWidgets('Should call Validate with correct values',
@@ -131,25 +148,6 @@ void main() {
   //   await tester.pumpAndSettle();
   //   expect(
   //     find.byKey(const ValueKey('dateInput')),
-  //     findsOneWidget,
-  //   );
-  // });
-
-  // testWidgets('Should presenter period error', (widgetTester) async {
-  //   await loadPage(widgetTester);
-
-  //   presenter.emitPeriodError(UIError.invalidField);
-  //   await widgetTester.pumpAndSettle();
-  //   expect(find.text('Invalid Field'), findsOneWidget);
-
-  //   presenter.emitPeriodError(UIError.requiredField);
-  //   await widgetTester.pumpAndSettle();
-  //   expect(find.text('Required Field'), findsOneWidget);
-
-  //   presenter.emitPeriodValid();
-  //   await widgetTester.pumpAndSettle();
-  //   expect(
-  //     find.byKey(const ValueKey('periodInput')),
   //     findsOneWidget,
   //   );
   // });

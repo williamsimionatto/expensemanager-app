@@ -71,4 +71,11 @@ void main() {
 
     await sut.loadData();
   });
+
+  group('Delete Expense', () {
+    test('Should call DeleteExpense on delete data', () async {
+      await sut.deleteExpense('1');
+      verify(() => deleteExpense.delete(id: '1')).called(1);
+    });
+  });
 }

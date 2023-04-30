@@ -441,4 +441,19 @@ void main() {
 
     await sut.add();
   });
+
+  test('Should return correct period on get periodId', () async {
+    await sut.loadPeriods();
+    sut.validatePeriod(periodId);
+
+    expect(sut.periodId, periodId);
+  });
+
+  test('Should return correct value on get isPeriodValid', () async {
+    await sut.loadPeriods();
+    expect(sut.isPeriodValid, false);
+
+    sut.validatePeriod(periodId);
+    expect(sut.isPeriodValid, true);
+  });
 }

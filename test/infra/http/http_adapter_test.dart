@@ -210,4 +210,60 @@ void main() {
       expect(future, throwsA(HttpError.serverError));
     });
   });
+
+  group('DELETE', () {
+    test('Should call delete with correct values', () async {
+      await sut.request(url: url, method: 'delete');
+
+      verify(
+        () => client.delete(
+          Uri.parse(url),
+          headers: {
+            'content-type': 'application/json',
+            'accept': 'application/json'
+          },
+        ),
+      );
+    });
+
+    test('Should return data if delete returns 200', () async {
+      final response = await sut.request(url: url, method: 'delete');
+      expect(response, {'any_key': 'any_value'});
+    });
+
+    test('Should return null if delete returns 200 without data', () async {
+      client.mockDelete(200, body: '');
+
+      final response = await sut.request(url: url, method: 'delete');
+      expect(response, null);
+    });
+
+    test('Should return BadRequestError if delete returns 400', () async {
+      client.mockDelete(400);
+
+      final future = sut.request(url: url, method: 'delete');
+      expect(future, throwsA(HttpError.badRequest));
+    });
+
+    test('Should return NotFoundError if delete returns 404', () async {
+      client.mockDelete(404);
+
+      final future = sut.request(url: url, method: 'delete');
+      expect(future, throwsA(HttpError.notFound));
+    });
+
+    test('Should return ServerError if delete returns 500', () async {
+      client.mockDelete(500);
+
+      final future = sut.request(url: url, method: 'delete');
+      expect(future, throwsA(HttpError.serverError));
+    });
+
+    test('Should return ServerError if delete throws', () async {
+      client.mockDeleteError();
+
+      final future = sut.request(url: url, method: 'delete');
+      expect(future, throwsA(HttpError.serverError));
+    });
+  });
 }

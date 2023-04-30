@@ -1,10 +1,11 @@
-import 'package:expensemanagerapp/domain/helpers/helpers.dart';
-import 'package:expensemanagerapp/ui/pages/pages.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 import 'package:expensemanagerapp/domain/entities/entities.dart';
+import 'package:expensemanagerapp/domain/helpers/helpers.dart';
+
 import 'package:expensemanagerapp/presentation/presenter/presenter.dart';
+import 'package:expensemanagerapp/ui/pages/pages.dart';
 
 import '../../data/mocks/mocks.dart';
 import '../../domain/mocks/mocks.dart';
@@ -24,7 +25,9 @@ void main() {
     deleteExpense.mockDelete('1');
 
     sut = GetxExpensesPresenter(
-        loadExpenses: loadExpenses, deleteExpenses: deleteExpense);
+      loadExpenses: loadExpenses,
+      deleteExpenses: deleteExpense,
+    );
   });
 
   test('Shoudl call LoadExpenses on loadData', () async {
@@ -70,5 +73,31 @@ void main() {
     );
 
     await sut.loadData();
+  });
+
+  group('Delete Expense', () {
+    test('Should call DeleteExpense on delete data', () async {
+      await sut.deleteExpense('1');
+      verify(() => deleteExpense.delete(id: '1')).called(1);
+    });
+
+    test('Should emit correct events on failure', () async {
+      deleteExpense.mockDeleteError(DomainError.unexpected);
+
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      sut.expensesStream.listen(
+        null,
+        onError: expectAsync1(
+          (error) => expect(error, DomainError.unexpected.description),
+        ),
+      );
+
+      await sut.deleteExpense('1');
+    });
+
+    test('Should emit correct events on success', () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      await sut.deleteExpense('1');
+    });
   });
 }

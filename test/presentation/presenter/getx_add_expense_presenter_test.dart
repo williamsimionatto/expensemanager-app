@@ -422,6 +422,7 @@ void main() {
       sut.successMessageStream,
       emits('Expense added successfully'),
     );
+    expectLater(sut.navigateToStream, emits('/expenses'));
     await sut.add();
   });
 

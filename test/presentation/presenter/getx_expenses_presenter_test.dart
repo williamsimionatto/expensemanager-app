@@ -77,5 +77,19 @@ void main() {
       await sut.deleteExpense('1');
       verify(() => deleteExpense.delete(id: '1')).called(1);
     });
+
+    test('Should emit correct events on failure', () async {
+      deleteExpense.mockDeleteError(DomainError.unexpected);
+
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      sut.expensesStream.listen(
+        null,
+        onError: expectAsync1(
+          (error) => expect(error, DomainError.unexpected.description),
+        ),
+      );
+
+      await sut.deleteExpense('1');
+    });
   });
 }

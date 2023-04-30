@@ -333,4 +333,12 @@ void main() {
     expect(currentRoute, '/any_route');
     expect(find.text('fake page'), findsOneWidget);
   });
+
+  testWidgets('Should not change page', (WidgetTester tester) async {
+    await loadPage(tester);
+
+    presenter.emitNavigateTo('');
+    await tester.pump();
+    expect(currentRoute, '/expenses/add');
+  });
 }

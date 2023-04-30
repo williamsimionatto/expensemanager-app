@@ -91,5 +91,10 @@ void main() {
 
       await sut.deleteExpense('1');
     });
+
+    test('Should emit correct events on success', () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      await sut.deleteExpense('1');
+    });
   });
 }

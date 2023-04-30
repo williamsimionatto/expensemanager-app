@@ -23,3 +23,5 @@ Widget makePage({required String path, required Widget Function() page}) {
     getPages: getPages,
   );
 }
+
+String get currentRoute => Get.currentRoute;

@@ -456,4 +456,14 @@ void main() {
     sut.validatePeriod(periodId);
     expect(sut.isPeriodValid, true);
   });
+
+  test('Should return correct categories on getCategories', () async {
+    await sut.loadPeriods();
+    await sut.loadPeriodCategories(periodId);
+
+    final categories = sut.getCategories();
+
+    expect(categories.length, greaterThan(0));
+    expect(categories, isA<List<Map<String, dynamic>>>());
+  });
 }

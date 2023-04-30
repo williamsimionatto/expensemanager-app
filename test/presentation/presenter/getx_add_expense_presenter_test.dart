@@ -466,4 +466,13 @@ void main() {
     expect(categories.length, greaterThan(0));
     expect(categories, isA<List<Map<String, dynamic>>>());
   });
+
+  test('Should return correct periods on getPeriods', () async {
+    await sut.loadPeriods();
+
+    final periods = sut.getPeriods();
+
+    expect(periods.length, greaterThan(0));
+    expect(periods, isA<List<Map<String, dynamic>>>());
+  });
 }

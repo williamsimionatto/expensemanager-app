@@ -1,7 +1,11 @@
-import 'package:expensemanagerapp/ui/pages/add_expense/components/components.dart';
-import 'package:expensemanagerapp/ui/pages/pages.dart';
+import 'dart:io' show Platform;
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'package:expensemanagerapp/ui/pages/pages.dart';
+
+import '../components/components.dart';
 
 class ExpenseDetails extends StatelessWidget {
   const ExpenseDetails({
@@ -63,7 +67,9 @@ class ExpenseDetails extends StatelessWidget {
                                   curve: Curves.easeInOut,
                                 );
                               },
-                              icon: const Icon(Icons.arrow_back),
+                              icon: Platform.isAndroid
+                                  ? const Icon(Icons.arrow_back)
+                                  : const Icon(Icons.arrow_back_ios),
                             ),
                             const SizedBox(width: 8),
                             const Expanded(child: AddExpenseButton()),

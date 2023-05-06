@@ -13,7 +13,7 @@ abstract class AddExpensePresenter implements Listenable {
 
   Stream<bool?>? get isFormValidStream;
   Stream<UIError?>? get mainErrorStream;
-  Stream<bool?>? get isLoadingStream;
+  Stream<bool> get isLoadingStream;
 
   Stream<UIError?>? get periodErrorStream;
   Stream<UIError?>? get categoryErrorStream;

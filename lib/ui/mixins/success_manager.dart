@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 
 mixin SuccessManager {
   void handleSuccessMessage(BuildContext context, Stream<String?>? stream) {
-    stream?.listen((message) {
+    stream?.distinct().listen((message) {
       if (message != null) {
         showSuccessMessage(context, message);
       }

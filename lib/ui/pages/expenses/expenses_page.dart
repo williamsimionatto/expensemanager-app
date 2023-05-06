@@ -45,7 +45,7 @@ class _ExpensesPage extends State<ExpensesPage>
 
               if (snapshot.hasData) {
                 return RefreshIndicator(
-                  onRefresh: () => widget.presenter.loadData(),
+                  onRefresh: () async => await widget.presenter.loadData(),
                   child: ListenableProvider<ExpensesPresenter>(
                     create: (_) => widget.presenter,
                     child: ExpenseListView(

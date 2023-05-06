@@ -109,7 +109,13 @@ class ExpenseItem extends StatelessWidget {
       ),
       barrierColor: Colors.grey.withOpacity(0.5),
       builder: (BuildContext context) {
-        return BottomSheetModal(expense: data, presenter: presenter);
+        return BottomSheetModal(
+          expense: data,
+          presenter: presenter,
+          onDeleteSuccess: () {
+            Navigator.pop(context);
+          },
+        );
       },
     );
   }

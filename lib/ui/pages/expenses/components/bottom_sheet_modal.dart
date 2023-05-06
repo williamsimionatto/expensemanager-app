@@ -7,11 +7,13 @@ import './delete_confirmation_dialog.dart';
 class BottomSheetModal extends StatelessWidget {
   final ExpenseViewModel expense;
   final ExpensesPresenter presenter;
+  final VoidCallback onDeleteSuccess;
 
   const BottomSheetModal({
     Key? key,
     required this.expense,
     required this.presenter,
+    required this.onDeleteSuccess,
   }) : super(key: key);
 
   String formatDate(date) {
@@ -123,6 +125,7 @@ class BottomSheetModal extends StatelessWidget {
 
                   if (confirmation != null && confirmation) {
                     await presenter.deleteExpense(expense.id.toString());
+                    onDeleteSuccess();
                     navigator.pop();
                   }
                 },

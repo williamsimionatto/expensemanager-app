@@ -67,7 +67,9 @@ class ExpenseDetails extends StatelessWidget {
                                   curve: Curves.easeInOut,
                                 );
                               },
-                              icon: const Icon(Icons.arrow_back_ios),
+                              icon: Platform.isAndroid
+                                  ? const Icon(Icons.arrow_back)
+                                  : const Icon(Icons.arrow_back_ios),
                             ),
                             const SizedBox(width: 8),
                             const Expanded(child: AddExpenseButton()),

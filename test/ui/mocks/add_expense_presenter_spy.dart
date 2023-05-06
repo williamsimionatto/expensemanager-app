@@ -14,6 +14,7 @@ class AddExpensePresenterSpy extends Mock implements AddExpensePresenter {
   final mainErrorController = StreamController<UIError?>();
   final successMessageController = StreamController<String>();
   final navigateToController = StreamController<String?>();
+  final isLoadingController = StreamController<bool>();
 
   AddExpensePresenterSpy() {
     when(() => loadPeriods()).thenAnswer((_) async => _);
@@ -36,6 +37,8 @@ class AddExpensePresenterSpy extends Mock implements AddExpensePresenter {
     when(() => successMessageStream)
         .thenAnswer((_) => successMessageController.stream);
     when(() => navigateToStream).thenAnswer((_) => navigateToController.stream);
+
+    when(() => isLoadingStream).thenAnswer((_) => isLoadingController.stream);
 
     when(() => add()).thenAnswer((_) async => _);
     when(() => isPeriodValid).thenAnswer((_) => true);
@@ -76,5 +79,7 @@ class AddExpensePresenterSpy extends Mock implements AddExpensePresenter {
     isFormValidController.close();
     mainErrorController.close();
     successMessageController.close();
+    navigateToController.close();
+    isLoadingController.close();
   }
 }

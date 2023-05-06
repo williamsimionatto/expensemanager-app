@@ -6,10 +6,12 @@ import 'package:mocktail/mocktail.dart';
 
 class ExpensesPresenterSpy extends Mock implements ExpensesPresenter {
   final loadExpensesController = StreamController<List<ExpenseViewModel>>();
+  final isLoadingController = StreamController<bool>();
 
   ExpensesPresenterSpy() {
     when(() => loadData()).thenAnswer((_) async => {});
     when(() => expensesStream).thenAnswer((_) => loadExpensesController.stream);
+    when(() => isLoadingStream).thenAnswer((_) => isLoadingController.stream);
   }
 
   void emitExpenses(List<ExpenseViewModel> data) =>
@@ -20,5 +22,6 @@ class ExpensesPresenterSpy extends Mock implements ExpensesPresenter {
 
   void dispose() {
     loadExpensesController.close();
+    isLoadingController.close();
   }
 }

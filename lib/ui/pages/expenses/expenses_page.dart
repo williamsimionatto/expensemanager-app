@@ -114,6 +114,7 @@ class ExpenseItem extends StatelessWidget {
           presenter: presenter,
           onDeleteSuccess: () {
             Navigator.pop(context);
+            showSuccessMessage(context, 'Expense deleted successfully');
           },
         );
       },

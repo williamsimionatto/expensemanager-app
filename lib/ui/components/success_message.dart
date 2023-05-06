@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 void showSuccessMessage(BuildContext context, String message) {
+  ScaffoldMessenger.of(context).hideCurrentSnackBar();
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       backgroundColor: const Color(0XFF3FA110),
@@ -9,6 +10,7 @@ void showSuccessMessage(BuildContext context, String message) {
         textAlign: TextAlign.center,
         style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
       ),
+      duration: const Duration(seconds: 2),
     ),
   );
 }

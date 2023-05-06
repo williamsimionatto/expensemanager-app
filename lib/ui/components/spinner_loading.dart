@@ -27,7 +27,7 @@ Future<void> showLoading(BuildContext context) async {
 }
 
 void hideLoading(BuildContext? context) {
-  if (context != null && Navigator.canPop(context)) {
+  if (context != null && ModalRoute.of(context)?.canPop == true) {
     Navigator.of(context).pop();
   }
 }

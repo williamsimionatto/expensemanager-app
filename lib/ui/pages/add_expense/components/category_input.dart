@@ -57,4 +57,10 @@ class _CategoryInputState extends State<CategoryInput> {
       },
     );
   }
+
+  @override
+  void dispose() {
+    CategoryInput.selectedCategory = '';
+    super.dispose();
+  }
 }

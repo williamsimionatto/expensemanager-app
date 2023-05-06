@@ -57,4 +57,10 @@ class _PeriodInputState extends State<PeriodInput> {
       },
     );
   }
+
+  @override
+  void dispose() {
+    PeriodInput.selectedPeriod = '';
+    super.dispose();
+  }
 }

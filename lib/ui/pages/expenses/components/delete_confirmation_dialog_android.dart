@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 
-class DeleteConfirmationDialog extends StatefulWidget {
-  const DeleteConfirmationDialog({Key? key}) : super(key: key);
+class DeleteConfirmationDialogAndroid extends StatefulWidget {
+  const DeleteConfirmationDialogAndroid({Key? key}) : super(key: key);
 
   @override
-  State<DeleteConfirmationDialog> createState() =>
+  State<DeleteConfirmationDialogAndroid> createState() =>
       _DeleteConfirmationDialogState();
 }
 
-class _DeleteConfirmationDialogState extends State<DeleteConfirmationDialog> {
+class _DeleteConfirmationDialogState
+    extends State<DeleteConfirmationDialogAndroid> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(

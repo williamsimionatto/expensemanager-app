@@ -1,8 +1,10 @@
+import 'package:expensemanagerapp/ui/pages/expenses/components/compoents.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'dart:io' show Platform;
 
 import 'package:expensemanagerapp/ui/pages/pages.dart';
-import './delete_confirmation_dialog.dart';
+import 'delete_confirmation_dialog_android.dart';
 
 class BottomSheetModal extends StatelessWidget {
   final ExpenseViewModel expense;
@@ -119,7 +121,9 @@ class BottomSheetModal extends StatelessWidget {
                   final confirmation = await showDialog<bool>(
                     context: context,
                     builder: (BuildContext context) {
-                      return const DeleteConfirmationDialog();
+                      return Platform.isAndroid
+                          ? const DeleteConfirmationDialogAndroid()
+                          : const DeleteConfirmationDialogIOS();
                     },
                   );
 
